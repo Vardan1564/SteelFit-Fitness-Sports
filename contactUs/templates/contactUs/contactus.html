@@ -1,0 +1,205 @@
+{% extends "baseLayout.html" %}
+{% block title %}Contact Us — SteelFit{% endblock %}
+
+{% block content %}
+<div class="contact-page">
+
+  <!-- Hero -->
+  <div class="contact-hero">
+    <div class="container" style="position:relative;z-index:2;">
+      <div class="section-label">Get in Touch</div>
+      <h1 style="font-family:var(--font-display);font-size:clamp(56px,8vw,100px);letter-spacing:0.04em;line-height:0.9;color:var(--white);">
+        LET'S<br>TALK<span style="color:var(--accent);">.</span>
+      </h1>
+      <p style="color:var(--text-muted);font-size:16px;max-width:440px;margin-top:20px;line-height:1.7;">
+        Have a question about equipment, booking, or partnership?
+        Our team is here 7 days a week to help you smash your goals.
+      </p>
+    </div>
+    <!-- Decorative grid -->
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(210,193,182,0.04) 1px, transparent 1px),linear-gradient(90deg,rgba(210,193,182,0.04) 1px, transparent 1px);background-size:50px 50px;" aria-hidden="true"></div>
+  </div>
+
+  <!-- Body -->
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- ── LEFT: INFO + MAP ── -->
+      <div class="contact-info">
+        <div class="contact-info-card">
+          <h2 style="font-family:var(--font-heading);font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);margin-bottom:8px;">
+            Contact Details
+          </h2>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">Reach us through any of these channels.</p>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">📍</div>
+            <div>
+              <div class="contact-info__label">Address</div>
+              <div class="contact-info__value">
+                SteelFit HQ, Shop No. 14,<br>
+                Iron Gate Complex, Andheri West,<br>
+                Mumbai, Maharashtra — 400053
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">📞</div>
+            <div>
+              <div class="contact-info__label">Phone</div>
+              <div class="contact-info__value">
+                <a href="tel:+919876543210" style="color:var(--light);transition:var(--transition);">+91 98765 43210</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">✉️</div>
+            <div>
+              <div class="contact-info__label">Email</div>
+              <div class="contact-info__value">
+                <a href="mailto:hello@steelfit.in" style="color:var(--light);">hello@steelfit.in</a><br>
+                <a href="mailto:support@steelfit.in" style="color:var(--text-muted);font-size:13px;">support@steelfit.in</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">⏰</div>
+            <div>
+              <div class="contact-info__label">Business Hours</div>
+              <div class="contact-info__value">Mon–Sat: 9AM – 8PM IST<br>
+              <span style="color:var(--text-muted);font-size:13px;">Sunday: 10AM – 5PM IST</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social -->
+        <div class="contact-info-card">
+          <h3 style="font-family:var(--font-heading);font-size:14px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:18px;">Follow Us</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;font-size:14px;color:var(--text-muted);transition:var(--transition);" onmouseover="this.style.borderColor='rgba(210,193,182,0.25)';this.style.color='var(--light)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.color='var(--text-muted)';">
+              <span style="font-size:22px;">📸</span> Instagram
+            </a>
+            <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;font-size:14px;color:var(--text-muted);transition:var(--transition);" onmouseover="this.style.borderColor='rgba(210,193,182,0.25)';this.style.color='var(--light)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.color='var(--text-muted)';">
+              <span style="font-size:22px;">▶️</span> YouTube
+            </a>
+            <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;font-size:14px;color:var(--text-muted);transition:var(--transition);" onmouseover="this.style.borderColor='rgba(210,193,182,0.25)';this.style.color='var(--light)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.color='var(--text-muted)';">
+              <span style="font-size:22px;">🐦</span> Twitter/X
+            </a>
+            <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;font-size:14px;color:var(--text-muted);transition:var(--transition);" onmouseover="this.style.borderColor='rgba(210,193,182,0.25)';this.style.color='var(--light)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.color='var(--text-muted)';">
+              <span style="font-size:22px;">💼</span> LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- Map Placeholder -->
+        <div class="contact-map">
+          <div class="contact-map__placeholder">
+            <div class="contact-map__placeholder-icon">🗺️</div>
+            <div class="contact-map__placeholder-text">Map Coming Soon</div>
+            <p style="font-size:12px;margin-top:8px;color:rgba(210,193,182,0.4);">Embed Google Maps here</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: CONTACT FORM ── -->
+      <div>
+        <div class="contact-form-card">
+          <h2 class="contact-form-title">Send a<br>Message</h2>
+          <p class="contact-form-sub">We typically respond within 2–4 business hours.</p>
+
+          <form method="POST" action="/contact/submit/" data-feedback="Message sent! We'll get back to you shortly.">
+            {% csrf_token %}
+
+            <div class="contact-form-row">
+              <div class="form-group">
+                <input type="text" id="contactFirst" name="first_name" placeholder="first" required />
+                <label for="contactFirst">First Name</label>
+              </div>
+              <div class="form-group">
+                <input type="text" id="contactLast" name="last_name" placeholder="last" required />
+                <label for="contactLast">Last Name</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="email" id="contactEmail" name="email" placeholder="email" autocomplete="email" required />
+              <label for="contactEmail">Email Address</label>
+            </div>
+
+            <div class="form-group">
+              <input type="tel" id="contactPhone" name="phone" placeholder="phone" />
+              <label for="contactPhone">Phone Number</label>
+            </div>
+
+            <div class="form-group">
+              <select id="contactSubject" name="subject">
+                <option value="">— Select a topic —</option>
+                <option value="product">Product Enquiry</option>
+                <option value="booking">Booking Help</option>
+                <option value="delivery">Delivery & Logistics</option>
+                <option value="return">Returns & Warranty</option>
+                <option value="partnership">Partnership / B2B</option>
+                <option value="other">Other</option>
+              </select>
+              <label for="contactSubject" style="top:0;font-size:11px;color:var(--accent);">Subject</label>
+            </div>
+
+            <div class="form-group form-group--textarea">
+              <textarea id="contactMessage" name="message" placeholder="message" rows="5" required></textarea>
+              <label for="contactMessage">Your Message</label>
+            </div>
+
+            <!-- Honeypot (spam protection) -->
+            <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off" />
+
+            <button type="submit" class="btn btn--primary btn--full btn--lg" style="margin-top:8px;">
+              <span>📩</span> Send Message
+            </button>
+
+            <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:16px;">
+              By submitting, you agree to our <a href="/privacy/" style="color:var(--accent);">Privacy Policy</a>.
+            </p>
+          </form>
+        </div>
+
+        <!-- FAQ Accordion -->
+        <div style="margin-top:32px;background:linear-gradient(145deg,rgba(27,60,83,0.3),rgba(13,31,45,0.5));border:1px solid rgba(210,193,182,0.08);border-radius:20px;padding:28px;">
+          <h3 style="font-family:var(--font-heading);font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);margin-bottom:20px;">
+            Quick FAQs
+          </h3>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <details style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <summary style="padding:14px 0;cursor:pointer;font-weight:600;color:var(--light);font-size:15px;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                Do you ship across India? <span style="color:var(--accent);">+</span>
+              </summary>
+              <p style="color:var(--text-muted);font-size:14px;padding:0 0 16px;line-height:1.7;">Yes! We deliver to 19,000+ pin codes across India. Free delivery on all orders.</p>
+            </details>
+            <details style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <summary style="padding:14px 0;cursor:pointer;font-weight:600;color:var(--light);font-size:15px;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                What is the return policy? <span style="color:var(--accent);">+</span>
+              </summary>
+              <p style="color:var(--text-muted);font-size:14px;padding:0 0 16px;line-height:1.7;">We offer a 30-day hassle-free return policy on all products. Warranty claims up to 2 years.</p>
+            </details>
+            <details style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <summary style="padding:14px 0;cursor:pointer;font-weight:600;color:var(--light);font-size:15px;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                Do you offer B2B / gym bulk orders? <span style="color:var(--accent);">+</span>
+              </summary>
+              <p style="color:var(--text-muted);font-size:14px;padding:0 0 16px;line-height:1.7;">Absolutely. We offer special pricing for gyms, fitness centres, and bulk orders. Email b2b@steelfit.in.</p>
+            </details>
+            <details>
+              <summary style="padding:14px 0;cursor:pointer;font-weight:600;color:var(--light);font-size:15px;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                How long does delivery take? <span style="color:var(--accent);">+</span>
+              </summary>
+              <p style="color:var(--text-muted);font-size:14px;padding:0 0 16px;line-height:1.7;">Metro cities: 2–4 days. Other areas: 5–8 business days. Heavy equipment may take up to 10 days.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /contact-layout -->
+  </div><!-- /container -->
+</div>
+{% endblock %}

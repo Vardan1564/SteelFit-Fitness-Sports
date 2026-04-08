@@ -1,0 +1,219 @@
+{% extends "baseLayout.html" %}
+{% block title %}{{ product.name|default:"Product Detail" }} — SteelFit{% endblock %}
+
+{% block content %}
+<div class="product-detail-page">
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <nav class="product-detail__breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="product-detail__breadcrumb-sep">›</span>
+      <a href="/products/">Products</a>
+      <span class="product-detail__breadcrumb-sep">›</span>
+      <span style="color:var(--light);">{{ product.name|default:"Olympic Barbell Set" }}</span>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="product-detail__layout">
+
+      <!-- ── GALLERY ── -->
+      <div class="product-detail__gallery">
+        <div class="product-detail__main-image">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100%;height:100%;object-fit:cover;" />
+          {% else %}
+            <div class="product-detail__main-image-placeholder" id="mainImagePlaceholder">🏋️</div>
+          {% endif %}
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="product-detail__thumbs">
+          <div class="product-detail__thumb active" data-icon="🏋️" aria-label="Image 1">🏋️</div>
+          <div class="product-detail__thumb" data-icon="⚙️" aria-label="Image 2">⚙️</div>
+          <div class="product-detail__thumb" data-icon="📐" aria-label="Image 3">📐</div>
+          <div class="product-detail__thumb" data-icon="🏆" aria-label="Image 4">🏆</div>
+        </div>
+      </div>
+
+      <!-- ── INFO ── -->
+      <div class="product-detail__info">
+        <div class="product-detail__category">{{ product.category.name|default:"Strength Training" }}</div>
+        <h1 class="product-detail__name">{{ product.name|default:"Olympic Barbell Set" }}</h1>
+
+        <div class="product-detail__rating">
+          <div class="product-detail__stars">★★★★★</div>
+          <span class="product-detail__rating-count">4.9 ({{ product.review_count|default:"128" }} reviews)</span>
+          <span class="badge badge--success">In Stock</span>
+        </div>
+
+        <div class="product-detail__price">
+          <span class="product-detail__price-current">₹{{ product.price|default:"24,999" }}</span>
+          {% if product.original_price %}
+            <span class="product-detail__price-original">₹{{ product.original_price }}</span>
+          {% else %}
+            <span class="product-detail__price-original">₹29,999</span>
+          {% endif %}
+          <span class="tag" style="align-self:center;">17% OFF</span>
+        </div>
+
+        <p class="product-detail__desc">
+          {{ product.description|default:"The SteelFit Olympic Barbell Set is engineered for serious athletes who demand peak performance. Crafted from high-tensile steel with knurled grip zones and dual-collar locking system. Rated for 300kg capacity. Suitable for powerlifting, CrossFit, and Olympic weightlifting." }}
+        </p>
+
+        <!-- Specs -->
+        <div class="product-detail__specs">
+          <div class="product-detail__spec">
+            <div class="product-detail__spec-label">Weight Capacity</div>
+            <div class="product-detail__spec-value">300 kg</div>
+          </div>
+          <div class="product-detail__spec">
+            <div class="product-detail__spec-label">Bar Length</div>
+            <div class="product-detail__spec-value">220 cm</div>
+          </div>
+          <div class="product-detail__spec">
+            <div class="product-detail__spec-label">Material</div>
+            <div class="product-detail__spec-value">High-Tensile Steel</div>
+          </div>
+          <div class="product-detail__spec">
+            <div class="product-detail__spec-label">Warranty</div>
+            <div class="product-detail__spec-value">2 Years</div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="product-detail__actions">
+          <a href="#booking-form" class="btn btn--primary btn--lg" style="flex:1;justify-content:center;">
+            <span>⚡</span> Book Now
+          </a>
+          <button class="btn btn--ghost" aria-label="Add to wishlist" style="width:56px;height:56px;border-radius:50%;padding:0;justify-content:center;font-size:22px;">♡</button>
+          <button class="btn btn--ghost" aria-label="Share" style="width:56px;height:56px;border-radius:50%;padding:0;justify-content:center;font-size:22px;">🔗</button>
+        </div>
+
+        <!-- Perks -->
+        <div style="display:flex;gap:16px;flex-wrap:wrap;padding:20px 0;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);">
+            <span>🚚</span> Free Delivery
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);">
+            <span>🔄</span> 30-Day Returns
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);">
+            <span>🛡️</span> 2-Year Warranty
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);">
+            <span>✅</span> Certified Quality
+          </div>
+        </div>
+
+        <!-- Booking Request Form -->
+        <div class="booking-form" id="booking-form">
+          <h3 class="booking-form__title">📋 Book This Product</h3>
+
+          <form method="POST" action="/products/{{ product.id|default:'1' }}/book/" data-feedback="Booking request submitted! We'll contact you within 24 hours.">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ product.id|default:'1' }}" />
+
+            <div class="form-group">
+              <input type="text" id="bookName" name="name" placeholder="name" required />
+              <label for="bookName">Your Full Name</label>
+            </div>
+
+            <div class="form-group">
+              <input type="tel" id="bookPhone" name="phone" placeholder="phone" required />
+              <label for="bookPhone">Phone Number</label>
+            </div>
+
+            <div class="form-group">
+              <input type="email" id="bookEmail" name="email" placeholder="email"  required />
+              <label for="bookEmail">Email Address</label>
+            </div>
+
+            <div class="form-group form-group--textarea">
+              <textarea id="bookMessage" name="message" placeholder="message" rows="3"></textarea>
+              <label for="bookMessage">Message (Optional)</label>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full">
+              <span>📩</span> Submit Booking Request
+            </button>
+          </form>
+        </div>
+
+      </div><!-- /info -->
+    </div><!-- /layout -->
+  </div><!-- /container -->
+
+  <!-- ── REVIEWS SECTION ── -->
+  <section class="reviews-section" aria-labelledby="reviews-title">
+    <div class="container">
+      <div class="section-label">Customer Reviews</div>
+      <h2 class="section-title" id="reviews-title" style="font-size:clamp(32px,4vw,52px);">
+        WHAT ATHLETES SAY
+      </h2>
+
+      <div class="reviews-grid">
+        {% for review in reviews %}
+        <div class="review-card">
+          <div class="review-card__header">
+            <div class="review-card__avatar">{{ review.user.first_name|slice:":1"|default:"U" }}</div>
+            <div>
+              <div class="review-card__name">{{ review.user.get_full_name|default:review.user.username }}</div>
+              <div class="review-card__date">{{ review.created_at|date:"M d, Y" }}</div>
+              <div class="review-card__stars">{{ review.stars|default:"★★★★★" }}</div>
+            </div>
+          </div>
+          <p class="review-card__text">{{ review.text }}</p>
+        </div>
+        {% empty %}
+        <div class="review-card">
+          <div class="review-card__header">
+            <div class="review-card__avatar">R</div>
+            <div>
+              <div class="review-card__name">Rohan Mehta</div>
+              <div class="review-card__date">March 15, 2025</div>
+              <div class="review-card__stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="review-card__text">Absolutely elite product. The steel quality is unmistakable — solid, smooth, and built to last decades. Best barbell set under ₹30K, no contest.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-card__header">
+            <div class="review-card__avatar">S</div>
+            <div>
+              <div class="review-card__name">Sneha Kapoor</div>
+              <div class="review-card__date">Feb 28, 2025</div>
+              <div class="review-card__stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="review-card__text">Delivery was super fast. The barbell arrived in perfect packaging and the knurling is exactly the right aggression — not too sharp, not too smooth. Perfect for daily use.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-card__header">
+            <div class="review-card__avatar">V</div>
+            <div>
+              <div class="review-card__name">Vikram Nair</div>
+              <div class="review-card__date">Jan 10, 2025</div>
+              <div class="review-card__stars">★★★★☆</div>
+            </div>
+          </div>
+          <p class="review-card__text">Great product for the price. I've been using it daily for 3 months and zero issues. The collar system is especially sturdy. Minor complaint: plates not included — but that's in the description so no surprises.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-card__header">
+            <div class="review-card__avatar">A</div>
+            <div>
+              <div class="review-card__name">Aarav Patel</div>
+              <div class="review-date">Dec 22, 2024</div>
+              <div class="review-card__stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="review-card__text">My gym coach recommended SteelFit and I'm now recommending it to everyone I know. The weight capacity is real — I've gone up to 200kg with zero flex or bend.</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

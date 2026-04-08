@@ -1,0 +1,234 @@
+{% extends "baseLayout.html" %}
+{% block title %}About Us — SteelFit{% endblock %}
+
+{% block content %}
+<div class="about-page">
+
+  <!-- ── HERO ── -->
+  <section class="about-hero" aria-labelledby="about-hero-title">
+    <div class="container">
+      <div class="about-hero__inner">
+        <div class="about-hero__eyebrow section-label">Our Story</div>
+        <h1 class="about-hero__title" id="about-hero-title">
+          WE ARE<br><span>STEELFIT</span>
+        </h1>
+        <p class="about-hero__text">
+          Born from the iron floors of Mumbai's underground fitness scene.
+          Built for athletes who know that greatness isn't given — it's forged.
+          Since 2018, we've been putting world-class equipment in the hands of everyday champions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OUR STORY ── -->
+  <section class="about-story" aria-labelledby="story-title">
+    <div class="container">
+      <div class="about-story__layout">
+        <div class="about-story__image" aria-hidden="true">🏋️</div>
+        <div>
+          <div class="section-label">How It Started</div>
+          <h2 class="section-title" id="story-title" style="font-size:clamp(36px,5vw,64px);">
+            FOUNDED IN<br>A GARAGE GYM
+          </h2>
+          <div class="divider"></div>
+          <p class="about-story__text">
+            It started with a frustration. Our founder, Arjun Verma — a competitive powerlifter —
+            couldn't find quality equipment without paying luxury prices imported from abroad.
+            He spent 2 years sourcing, testing, and rejecting hundreds of suppliers before
+            finding partners who matched his obsessive standards.
+          </p>
+          <p class="about-story__text">
+            SteelFit launched in 2018 from a 200 sq.ft. garage in Andheri, Mumbai with just
+            12 products. Today we ship to every corner of India, serve 12,000+ members,
+            and stock over 250 premium fitness products — all maintaining the same
+            uncompromising quality Arjun demanded from day one.
+          </p>
+          <p class="about-story__text">
+            Every product in our catalog has been personally tested by our team of certified
+            trainers, physiotherapists, and competitive athletes. If it doesn't survive our
+            internal abuse tests, it never reaches your door.
+          </p>
+          <div style="display:flex;gap:32px;margin-top:36px;">
+            <div>
+              <div style="font-family:var(--font-display);font-size:48px;color:var(--accent);letter-spacing:0.03em;">2018</div>
+              <div style="font-size:13px;color:var(--text-muted);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">Founded</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:48px;color:var(--accent);letter-spacing:0.03em;">12K+</div>
+              <div style="font-size:13px;color:var(--text-muted);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">Members</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:48px;color:var(--accent);letter-spacing:0.03em;">250+</div>
+              <div style="font-size:13px;color:var(--text-muted);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">Products</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MISSION & VISION ── -->
+  <section class="mission-vision" aria-labelledby="mission-title">
+    <div class="container">
+      <div class="text-center">
+        <div class="section-label">Purpose</div>
+        <h2 class="section-title" id="mission-title">MISSION &<br>VISION</h2>
+      </div>
+      <div class="mission-vision__grid">
+        <div class="mission-card" data-label="M">
+          <div class="mission-card__icon">🎯</div>
+          <h3 class="mission-card__title">Our Mission</h3>
+          <p class="mission-card__text">
+            To democratize access to premium fitness equipment across India —
+            making world-class gear affordable, accessible, and available to
+            every serious athlete regardless of their geography or budget.
+            We believe excellence in training shouldn't be a privilege.
+          </p>
+        </div>
+        <div class="mission-card" data-label="V">
+          <div class="mission-card__icon">🔭</div>
+          <h3 class="mission-card__title">Our Vision</h3>
+          <p class="mission-card__text">
+            To build India's most trusted fitness brand — one that athletes turn to
+            not just for equipment, but for guidance, community, and inspiration.
+            By 2028, we aim to have 1 million SteelFit members actively training
+            and transforming their lives across the country.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY CHOOSE US ── -->
+  <section class="section" style="background:var(--darker);" aria-labelledby="why-about-title">
+    <div class="container">
+      <div class="text-center">
+        <div class="section-label">Our Edge</div>
+        <h2 class="section-title" id="why-about-title">WHY ATHLETES<br>TRUST STEELFIT</h2>
+      </div>
+      <div class="why-grid" style="margin-top:56px;">
+        <div class="why-card" data-animate="fadeInUp" data-delay="0.1">
+          <div class="why-card__icon">🔬</div>
+          <h3 class="why-card__title">Lab Tested</h3>
+          <p class="why-card__text">Every product passes ISO-grade tensile, fatigue, and load tests before entering our catalog.</p>
+        </div>
+        <div class="why-card" data-animate="fadeInUp" data-delay="0.2">
+          <div class="why-card__icon">🤝</div>
+          <h3 class="why-card__title">Athlete Partners</h3>
+          <p class="why-card__text">Tested and endorsed by national-level athletes, certified coaches, and sports physiotherapists.</p>
+        </div>
+        <div class="why-card" data-animate="fadeInUp" data-delay="0.3">
+          <div class="why-card__icon">🌍</div>
+          <h3 class="why-card__title">Pan-India Delivery</h3>
+          <p class="why-card__text">We deliver to 19,000+ pin codes across India with specialized packaging for heavy equipment.</p>
+        </div>
+        <div class="why-card" data-animate="fadeInUp" data-delay="0.4">
+          <div class="why-card__icon">💬</div>
+          <h3 class="why-card__title">7-Day Support</h3>
+          <p class="why-card__text">Our team of fitness enthusiasts is available 7 days a week via phone, chat, and email.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TEAM ── -->
+  <section class="team-section" aria-labelledby="team-title">
+    <div class="container">
+      <div class="text-center">
+        <div class="section-label">The People</div>
+        <h2 class="section-title" id="team-title">MEET THE<br>STEEL TEAM</h2>
+      </div>
+
+      <div class="team-grid">
+        {% for member in team_members %}
+        <div class="team-card">
+          <div class="team-card__image">
+            {% if member.image %}
+              <img src="{{ member.image.url }}" alt="{{ member.name }}" style="width:100%;height:100%;object-fit:cover;" />
+            {% else %}
+              👤
+            {% endif %}
+          </div>
+          <div class="team-card__info">
+            <div class="team-card__name">{{ member.name }}</div>
+            <div class="team-card__role">{{ member.role }}</div>
+            <div class="team-card__social">
+              {% if member.linkedin %}<a href="{{ member.linkedin }}" class="team-card__social-link" aria-label="LinkedIn">in</a>{% endif %}
+              {% if member.instagram %}<a href="{{ member.instagram }}" class="team-card__social-link" aria-label="Instagram">📸</a>{% endif %}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="team-card">
+          <div class="team-card__image">💪</div>
+          <div class="team-card__info">
+            <div class="team-card__name">Arjun Verma</div>
+            <div class="team-card__role">Founder & CEO</div>
+            <div class="team-card__social">
+              <a href="#" class="team-card__social-link">in</a>
+              <a href="#" class="team-card__social-link">📸</a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-card__image">🏋️</div>
+          <div class="team-card__info">
+            <div class="team-card__name">Meera Kapoor</div>
+            <div class="team-card__role">Head of Products</div>
+            <div class="team-card__social">
+              <a href="#" class="team-card__social-link">in</a>
+              <a href="#" class="team-card__social-link">📸</a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-card__image">🥊</div>
+          <div class="team-card__info">
+            <div class="team-card__name">Rohit Singh</div>
+            <div class="team-card__role">Lead Trainer</div>
+            <div class="team-card__social">
+              <a href="#" class="team-card__social-link">in</a>
+              <a href="#" class="team-card__social-link">📸</a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-card__image">🚀</div>
+          <div class="team-card__info">
+            <div class="team-card__name">Priya Nair</div>
+            <div class="team-card__role">Marketing Director</div>
+            <div class="team-card__social">
+              <a href="#" class="team-card__social-link">in</a>
+              <a href="#" class="team-card__social-link">📸</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" aria-label="Join us">
+    <div class="cta-section__bg-text" aria-hidden="true">JOIN</div>
+    <div class="container">
+      <div class="cta-section__inner">
+        <div class="section-label" style="justify-content:center;">Join the Family</div>
+        <h2 class="cta-section__title">
+          BE PART OF<br>THE <span>STEEL</span> ARMY
+        </h2>
+        <p class="cta-section__text">
+          12,000+ athletes can't be wrong. Join SteelFit today and unlock exclusive deals,
+          training guides, and early product access.
+        </p>
+        <div class="cta-section__actions">
+          <a href="/register/" class="btn btn--primary btn--lg"><span>⚡</span> Join Free Today</a>
+          <a href="/contact/" class="btn btn--outline btn--lg" style="border-color:rgba(244,237,232,0.3);color:var(--light);">Talk to Us →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

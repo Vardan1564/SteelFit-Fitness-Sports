@@ -1,0 +1,253 @@
+{% extends "baseLayout.html" %}
+{% block title %}Products — SteelFit{% endblock %}
+
+{% block content %}
+<div class="products-page">
+
+  <!-- Hero -->
+  <div class="products-page__hero">
+    <div class="container">
+      <div class="section-label" style="position:relative;z-index:2;">Our Collection</div>
+      <h1 class="products-page__title">
+        ALL<br><span class="text-accent">EQUIPMENT</span>
+      </h1>
+      <p style="color:var(--text-muted);font-size:15px;max-width:480px;margin-top:16px;position:relative;z-index:2;">
+        Browse our full range of premium fitness gear. Filter by category, price, and more.
+      </p>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="products-page__body">
+    <div class="container">
+      <div class="products-layout">
+
+        <!-- ── FILTERS SIDEBAR ── -->
+        <aside class="filters-sidebar" aria-label="Product filters">
+          <div class="filters-card">
+            <div class="filters-title">
+              Filters
+              <span class="filters-clear" role="button" tabindex="0">Clear all</span>
+            </div>
+
+            <!-- Category -->
+            <div class="filter-group">
+              <div class="filter-group__title">Category</div>
+
+              {% for cat in categories %}
+              <label class="filter-checkbox">
+                <input type="checkbox" class="filter-category" value="{{ cat.slug }}" />
+                <span class="filter-checkbox__box"></span>
+                {{ cat.name }} ({{ cat.count }})
+              </label>
+              {% empty %}
+              <label class="filter-checkbox">
+                <input type="checkbox" class="filter-category" value="strength" />
+                <span class="filter-checkbox__box"></span>
+                Strength Training (24)
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" class="filter-category" value="cardio" />
+                <span class="filter-checkbox__box"></span>
+                Cardio (18)
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" class="filter-category" value="combat" />
+                <span class="filter-checkbox__box"></span>
+                Combat Sports (12)
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" class="filter-category" value="accessories" />
+                <span class="filter-checkbox__box"></span>
+                Accessories (36)
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" class="filter-category" value="recovery" />
+                <span class="filter-checkbox__box"></span>
+                Recovery (8)
+              </label>
+              {% endfor %}
+            </div>
+
+            <!-- Price Range -->
+            <div class="filter-group">
+              <div class="filter-group__title">
+                Price Range — <span id="priceDisplay">₹1,00,000</span>
+              </div>
+              <div class="price-range">
+                <input type="range" id="priceRange" min="0" max="100000" value="100000" step="500" aria-label="Max price" />
+                <div class="price-range__labels">
+                  <span>₹0</span>
+                  <span>₹1,00,000</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Availability -->
+            <div class="filter-group">
+              <div class="filter-group__title">Availability</div>
+              <label class="filter-checkbox">
+                <input type="checkbox" class="filter-category" value="instock" />
+                <span class="filter-checkbox__box"></span>
+                In Stock
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" class="filter-category" value="preorder" />
+                <span class="filter-checkbox__box"></span>
+                Pre-Order
+              </label>
+            </div>
+
+          </div>
+        </aside>
+
+        <!-- ── PRODUCTS MAIN ── -->
+        <div class="products-main">
+          <div class="products-bar">
+            <!-- Search -->
+            <div class="products-search">
+              <span class="products-search__icon" aria-hidden="true">🔍</span>
+              <input
+                type="search"
+                id="productSearch"
+                placeholder="Search products..."
+                aria-label="Search products"
+              />
+            </div>
+
+            <!-- Sort -->
+            <div class="products-sort">
+              <label for="productSort">Sort by:</label>
+              <select id="productSort" aria-label="Sort products">
+                <option value="default">Featured</option>
+                <option value="price-asc">Price: Low → High</option>
+                <option value="price-desc">Price: High → Low</option>
+                <option value="name-asc">Name A–Z</option>
+              </select>
+            </div>
+
+            <!-- Count -->
+            <div class="products-count">
+              Showing <span id="productCount">{{ products.count|default:"12" }}</span> products
+            </div>
+          </div>
+
+          <!-- Product Grid -->
+          <div class="products-listing-grid" id="productsGrid">
+
+            {% for product in products %}
+            <article
+              class="product-card"
+              data-name="{{ product.name|lower }}"
+              data-category="{% for cat in product.category.all %}{{ cat.slug }}{% if not forloop.last %},{% endif %}{% endfor %}" 
+              data-price="{{ product.discount_price }}"
+            >
+              <div class="product-card__image">
+                {% if product.image %}
+                  <img class="product-card__image-inner" src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy" />
+                {% else %}
+                  <div class="product-card__image-placeholder">🏋️</div>
+                {% endif %}
+                {% if product.is_featured %}
+                <div class="product-card__badge"><span class="tag">⚡ Featured</span></div>
+                {% endif %}
+                <div class="product-card__actions">
+                  <button class="product-card__action-btn" aria-label="Add to wishlist">♡</button>
+                  <a href="/products/{{ product.id }}/" class="product-card__action-btn" aria-label="Quick view">👁</a>
+                </div>
+              </div>
+              <div class="product-card__body">
+                <div class="product-card__category">
+                  {% for cat in product.category.all %}
+                      {{cat.name}}
+                  {% endfor %}
+                </div>
+                <h2 class="product-card__name">{{ product.name }}</h2>
+                <div class="product-card__footer">
+                  <div>
+                    <span class="product-card__price">₹{{ product.discount_price }}</span>
+                    {% if product.original_price %}
+                      <span class="product-card__price-original">₹{{ product.original_price }}</span>
+                    {% endif %}
+                  </div>
+                  <a href="/products/{{ product.id }}/" class="btn btn--primary btn--sm">View</a>
+                </div>
+              </div>
+            </article>
+            {% empty %}
+
+            <!-- Placeholder products (no DB data) -->
+            {% for item in placeholder_items %}
+            <article class="product-card" data-name="{{ item.name|lower }}" data-category="{{ item.cat }}" data-price="{{ item.price }}">
+              <div class="product-card__image">
+                <div class="product-card__image-placeholder">{{ item.icon }}</div>
+                <div class="product-card__badge"><span class="tag">{{ item.tag }}</span></div>
+                <div class="product-card__actions">
+                  <button class="product-card__action-btn" aria-label="Wishlist">♡</button>
+                  <a href="{% url "product_detail" %}" class="product-card__action-btn" aria-label="Quick View">👁</a>
+                </div>
+              </div>
+              <div class="product-card__body">
+                <div class="product-card__category">{{ item.category }}</div>
+                <h2 class="product-card__name">{{ item.name }}</h2>
+                <div class="product-card__footer">
+                  <div>
+                    <span class="product-card__price">₹{{ item.price|floatformat:"0" }}</span>
+                    <span class="product-card__price-original">₹{{ item.original|floatformat:"0" }}</span>
+                  </div>
+                  <a href="/products/1/" class="btn btn--primary btn--sm">View</a>
+                </div>
+              </div>
+            </article>
+            {% empty %}
+            <!-- Static fallback when no context at all -->
+            <article class="product-card" data-name="pro boxing gloves" data-category="combat" data-price="3499">
+              <div class="product-card__image"><div class="product-card__image-placeholder">🥊</div><div class="product-card__badge"><span class="tag">Combat</span></div><div class="product-card__actions"><button class="product-card__action-btn">♡</button><a href="/products/1/" class="product-card__action-btn">👁</a></div></div>
+              <div class="product-card__body"><div class="product-card__category">Boxing</div><h2 class="product-card__name">Pro Boxing Gloves</h2><div class="product-card__footer"><div><span class="product-card__price">₹3,499</span><span class="product-card__price-original">₹4,200</span></div><a href="/products/1/" class="btn btn--primary btn--sm">View</a></div></div>
+            </article>
+            <article class="product-card" data-name="olympic barbell set" data-category="strength" data-price="24999">
+              <div class="product-card__image"><div class="product-card__image-placeholder">🏋️</div><div class="product-card__badge"><span class="tag">⚡ Best Seller</span></div><div class="product-card__actions"><button class="product-card__action-btn">♡</button><a href="/products/2/" class="product-card__action-btn">👁</a></div></div>
+              <div class="product-card__body"><div class="product-card__category">Strength</div><h2 class="product-card__name">Olympic Barbell Set</h2><div class="product-card__footer"><div><span class="product-card__price">₹24,999</span><span class="product-card__price-original">₹29,999</span></div><a href="/products/2/" class="btn btn--primary btn--sm">View</a></div></div>
+            </article>
+            <article class="product-card" data-name="air assault bike" data-category="cardio" data-price="89999">
+              <div class="product-card__image"><div class="product-card__image-placeholder">🚴</div><div class="product-card__badge"><span class="tag">Cardio</span></div><div class="product-card__actions"><button class="product-card__action-btn">♡</button><a href="/products/3/" class="product-card__action-btn">👁</a></div></div>
+              <div class="product-card__body"><div class="product-card__category">Cardio</div><h2 class="product-card__name">Air Assault Bike</h2><div class="product-card__footer"><div><span class="product-card__price">₹89,999</span><span class="product-card__price-original">₹1,09,999</span></div><a href="/products/3/" class="btn btn--primary btn--sm">View</a></div></div>
+            </article>
+            <article class="product-card" data-name="adjustable dumbbell set" data-category="strength" data-price="12999">
+              <div class="product-card__image"><div class="product-card__image-placeholder">💪</div><div class="product-card__badge"><span class="tag">Strength</span></div><div class="product-card__actions"><button class="product-card__action-btn">♡</button><a href="/products/4/" class="product-card__action-btn">👁</a></div></div>
+              <div class="product-card__body"><div class="product-card__category">Strength</div><h2 class="product-card__name">Adjustable Dumbbell Set</h2><div class="product-card__footer"><div><span class="product-card__price">₹12,999</span><span class="product-card__price-original">₹15,999</span></div><a href="/products/4/" class="btn btn--primary btn--sm">View</a></div></div>
+            </article>
+            <article class="product-card" data-name="resistance band kit" data-category="accessories" data-price="1299">
+              <div class="product-card__image"><div class="product-card__image-placeholder">🎗️</div><div class="product-card__badge"><span class="tag">Accessories</span></div><div class="product-card__actions"><button class="product-card__action-btn">♡</button><a href="/products/5/" class="product-card__action-btn">👁</a></div></div>
+              <div class="product-card__body"><div class="product-card__category">Accessories</div><h2 class="product-card__name">Resistance Band Kit</h2><div class="product-card__footer"><div><span class="product-card__price">₹1,299</span><span class="product-card__price-original">₹1,799</span></div><a href="/products/5/" class="btn btn--primary btn--sm">View</a></div></div>
+            </article>
+            <article class="product-card" data-name="foam roller pro" data-category="recovery" data-price="2499">
+              <div class="product-card__image"><div class="product-card__image-placeholder">🔄</div><div class="product-card__badge"><span class="tag">Recovery</span></div><div class="product-card__actions"><button class="product-card__action-btn">♡</button><a href="/products/6/" class="product-card__action-btn">👁</a></div></div>
+              <div class="product-card__body"><div class="product-card__category">Recovery</div><h2 class="product-card__name">Foam Roller Pro</h2><div class="product-card__footer"><div><span class="product-card__price">₹2,499</span><span class="product-card__price-original">₹3,200</span></div><a href="/products/6/" class="btn btn--primary btn--sm">View</a></div></div>
+            </article>
+            {% endfor %}
+            {% endfor %}
+
+          </div><!-- /grid -->
+
+          <!-- Pagination -->
+          {% if products.has_other_pages %}
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:48px;">
+            {% if products.has_previous %}
+              <a href="?page={{ products.previous_page_number }}" class="btn btn--ghost btn--sm">← Prev</a>
+            {% endif %}
+            {% for num in products.paginator.page_range %}
+              <a href="?page={{ num }}" class="btn btn--sm {% if num == products.number %}btn--primary{% else %}btn--ghost{% endif %}">{{ num }}</a>
+            {% endfor %}
+            {% if products.has_next %}
+              <a href="?page={{ products.next_page_number }}" class="btn btn--ghost btn--sm">Next →</a>
+            {% endif %}
+          </div>
+          {% endif %}
+
+        </div><!-- /products-main -->
+      </div><!-- /layout -->
+    </div><!-- /container -->
+  </div><!-- /body -->
+</div>
+{% endblock %}
