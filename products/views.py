@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from . import models
 from django.db.models import Count
 
@@ -13,5 +13,9 @@ def products(request):
 def home(request):
     return render(request,'home.html')
 
-def product_detail(request):
-    return render(request,'products/product_detail.html')
+def product_detail(request, id):
+    product = get_object_or_404(
+        models.Products.objects.prefetch_related('category','images'),
+        id = id
+    )
+    return render(request,'products/product_detail.html',{'product':product})

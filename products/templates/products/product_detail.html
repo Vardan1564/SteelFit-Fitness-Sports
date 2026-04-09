@@ -7,9 +7,9 @@
 
     <!-- Breadcrumb -->
     <nav class="product-detail__breadcrumb" aria-label="Breadcrumb">
-      <a href="/">Home</a>
+      <a href="{% url 'home' %}">Home</a>
       <span class="product-detail__breadcrumb-sep">›</span>
-      <a href="/products/">Products</a>
+      <a href="{% url 'products' %}">Products</a>
       <span class="product-detail__breadcrumb-sep">›</span>
       <span style="color:var(--light);">{{ product.name|default:"Olympic Barbell Set" }}</span>
     </nav>
@@ -21,7 +21,7 @@
       <div class="product-detail__gallery">
         <div class="product-detail__main-image">
           {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100%;height:100%;object-fit:cover;" />
+            <img id="mainImage" src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100%;height:100%;object-fit:cover;transition:opacity .15s ease;" />
           {% else %}
             <div class="product-detail__main-image-placeholder" id="mainImagePlaceholder">🏋️</div>
           {% endif %}
@@ -29,10 +29,16 @@
 
         <!-- Thumbnails -->
         <div class="product-detail__thumbs">
-          <div class="product-detail__thumb active" data-icon="🏋️" aria-label="Image 1">🏋️</div>
-          <div class="product-detail__thumb" data-icon="⚙️" aria-label="Image 2">⚙️</div>
+         {% for img in product.images.all %}
+          <div class="product-detail__thumb {% if forloop.first %}active{% endif %}"
+       data-image="{{ img.image.url }}">
+       
+    <img src="{{ img.image.url }}" alt="">
+  </div>
+         {% endfor %}
+          {% comment %} <div class="product-detail__thumb" data-icon="⚙️" aria-label="Image 2">⚙️</div>
           <div class="product-detail__thumb" data-icon="📐" aria-label="Image 3">📐</div>
-          <div class="product-detail__thumb" data-icon="🏆" aria-label="Image 4">🏆</div>
+          <div class="product-detail__thumb" data-icon="🏆" aria-label="Image 4">🏆</div> {% endcomment %}
         </div>
       </div>
 
@@ -48,7 +54,7 @@
         </div>
 
         <div class="product-detail__price">
-          <span class="product-detail__price-current">₹{{ product.price|default:"24,999" }}</span>
+          <span class="product-detail__price-current">₹{{ product.discount_price|default:"24,999" }}</span>
           {% if product.original_price %}
             <span class="product-detail__price-original">₹{{ product.original_price }}</span>
           {% else %}
@@ -64,20 +70,12 @@
         <!-- Specs -->
         <div class="product-detail__specs">
           <div class="product-detail__spec">
-            <div class="product-detail__spec-label">Weight Capacity</div>
-            <div class="product-detail__spec-value">300 kg</div>
-          </div>
-          <div class="product-detail__spec">
-            <div class="product-detail__spec-label">Bar Length</div>
-            <div class="product-detail__spec-value">220 cm</div>
-          </div>
-          <div class="product-detail__spec">
             <div class="product-detail__spec-label">Material</div>
-            <div class="product-detail__spec-value">High-Tensile Steel</div>
+            <div class="product-detail__spec-value">{{product.material}}</div>
           </div>
           <div class="product-detail__spec">
             <div class="product-detail__spec-label">Warranty</div>
-            <div class="product-detail__spec-value">2 Years</div>
+            <div class="product-detail__spec-value">{{product.warranty}}</div>
           </div>
         </div>
 
@@ -216,4 +214,64 @@
   </section>
 
 </div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  (function () {
+    const gallery = document.querySelector('.product-detail__gallery');
+    if (!gallery) return;
+
+    const mainImageWrapper = gallery.querySelector('.product-detail__main-image');
+    const thumbs = Array.from(gallery.querySelectorAll('.product-detail__thumb[data-image]'));
+    if (!mainImageWrapper || !thumbs.length) return;
+
+    const getOrCreateMainImage = () => {
+      let mainImg = mainImageWrapper.querySelector('#mainImage, img');
+      if (mainImg) {
+        mainImg.id = 'mainImage';
+        return mainImg;
+      }
+
+      const placeholder = mainImageWrapper.querySelector('#mainImagePlaceholder, .product-detail__main-image-placeholder');
+      if (placeholder) placeholder.remove();
+
+      mainImg = document.createElement('img');
+      mainImg.id = 'mainImage';
+      mainImg.alt = '{{ product.name|escapejs }}';
+      mainImg.style.width = '100%';
+      mainImg.style.height = '100%';
+      mainImg.style.objectFit = 'cover';
+      mainImg.style.transition = 'opacity .15s ease';
+      mainImageWrapper.appendChild(mainImg);
+      return mainImg;
+    };
+
+    if (!mainImageWrapper.querySelector('img')) {
+      const firstThumb = gallery.querySelector('.product-detail__thumb.active[data-image], .product-detail__thumb[data-image]');
+      if (firstThumb) {
+        const firstImage = firstThumb.getAttribute('data-image');
+        if (firstImage) getOrCreateMainImage().src = firstImage;
+      }
+    }
+
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const newImage = thumb.getAttribute('data-image');
+        if (!newImage) return;
+
+        const mainImg = getOrCreateMainImage();
+        mainImg.style.opacity = '0';
+        setTimeout(() => {
+          mainImg.src = newImage;
+          mainImg.style.opacity = '1';
+        }, 120);
+
+        thumbs.forEach((t) => t.classList.remove('active'));
+        thumb.classList.add('active');
+      });
+    });
+  })();
+</script>
 {% endblock %}

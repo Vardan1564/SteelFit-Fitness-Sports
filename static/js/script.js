@@ -153,28 +153,85 @@ function initProductFilter() {
 }
 
 /* ── Product Gallery (product_detail.html) ── */
+// function initProductGallery() {
+//     const thumbs = document.querySelectorAll('.product-detail__thumb');
+//     const mainImg = document.querySelector('.product-detail__main-image-placeholder');
+
+//     if (!thumbs.length || !mainImg) return;
+
+//     thumbs.forEach(thumb => {
+//         thumb.addEventListener('click', () => {
+//             thumbs.forEach(t => t.classList.remove('active'));
+//             thumb.classList.add('active');
+//             // animate swap
+//             mainImg.style.opacity = '0';
+//             mainImg.style.transform = 'scale(0.96)';
+//             setTimeout(() => {
+//                 mainImg.textContent = thumb.dataset.icon || mainImg.textContent;
+//                 mainImg.style.opacity = '1';
+//                 mainImg.style.transform = 'scale(1)';
+//             }, 200);
+//         });
+//     });
+
+//     if (thumbs[0]) thumbs[0].classList.add('active');
+// }
 function initProductGallery() {
-    const thumbs = document.querySelectorAll('.product-detail__thumb');
-    const mainImg = document.querySelector('.product-detail__main-image-placeholder');
+    const gallery = document.querySelector('.product-detail__gallery');
+    const mainImageWrapper = document.querySelector('.product-detail__main-image');
+    if (!gallery || !mainImageWrapper) return;
 
-    if (!thumbs.length || !mainImg) return;
+    const getOrCreateMainImage = () => {
+        let mainImg = mainImageWrapper.querySelector('#mainImage, img');
+        if (mainImg) {
+            mainImg.id = 'mainImage';
+            if (!mainImg.style.transition) mainImg.style.transition = 'opacity 0.15s ease';
+            return mainImg;
+        }
 
-    thumbs.forEach(thumb => {
-        thumb.addEventListener('click', () => {
-            thumbs.forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
-            // animate swap
-            mainImg.style.opacity = '0';
-            mainImg.style.transform = 'scale(0.96)';
-            setTimeout(() => {
-                mainImg.textContent = thumb.dataset.icon || mainImg.textContent;
-                mainImg.style.opacity = '1';
-                mainImg.style.transform = 'scale(1)';
-            }, 200);
-        });
+        const placeholder = mainImageWrapper.querySelector('#mainImagePlaceholder, .product-detail__main-image-placeholder');
+        if (placeholder) placeholder.remove();
+
+        mainImg = document.createElement('img');
+        mainImg.id = 'mainImage';
+        mainImg.alt = 'Product image';
+        mainImg.style.width = '100%';
+        mainImg.style.height = '100%';
+        mainImg.style.objectFit = 'cover';
+        mainImg.style.transition = 'opacity 0.15s ease';
+        mainImageWrapper.appendChild(mainImg);
+        return mainImg;
+    };
+
+    const initialThumb = gallery.querySelector('.product-detail__thumb.active, .product-detail__thumb[data-image]');
+    if (!mainImageWrapper.querySelector('img') && initialThumb) {
+        const initialImage = initialThumb.getAttribute('data-image');
+        if (initialImage) {
+            const mainImg = getOrCreateMainImage();
+            mainImg.src = initialImage;
+            mainImg.style.opacity = '1';
+        }
+    }
+
+    gallery.addEventListener('click', function (e) {
+        const thumb = e.target.closest('.product-detail__thumb');
+        if (!thumb) return;
+
+        const newImage = thumb.getAttribute('data-image');
+        if (!newImage) return;
+
+        const mainImg = getOrCreateMainImage();
+        mainImg.style.opacity = '0';
+
+        setTimeout(() => {
+            mainImg.src = newImage;
+            mainImg.style.opacity = '1';
+        }, 150);
+
+        gallery.querySelectorAll('.product-detail__thumb')
+            .forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
     });
-
-    if (thumbs[0]) thumbs[0].classList.add('active');
 }
 
 /* ── Ticker Duplication (infinite scroll) ── */
@@ -350,7 +407,7 @@ function initPageLoad() {
 }
 
 /* ── Init ── */
-document.addEventListener('DOMContentLoaded', () => {
+function runInitializers() {
     initScrollAnimations();
     setActiveNavLink();
     initProductFilter();
@@ -371,6 +428,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.3 });
         obs.observe(counterSection);
     }
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runInitializers);
+} else {
+    runInitializers();
+}
 
 initPageLoad();
