@@ -392,8 +392,8 @@ select {
    NAVBAR
    ============================================================ */
 .navbar {
-    position: fixed;
-    top: 0;
+    position: fixed; /* keep this if you want sticky navbar */
+    top: 0px;       /* push it down */
     left: 0;
     right: 0;
     height: var(--nav-h);
@@ -470,6 +470,7 @@ select {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-top: 10px;
 }
 
 .navbar__hamburger {
