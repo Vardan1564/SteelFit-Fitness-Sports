@@ -2,9 +2,9 @@
 {% block title %}Contact Us — SteelFit{% endblock %}
 
 {% block content %}
-<div class="contact-page">
   
-  <!-- Hero --> 
+<div class="contact-page">
+  <!-- Hero -->
   <div class="contact-hero">
     <div class="container" style="position:relative;z-index:2;">
       <div class="section-label">Get in Touch</div>
@@ -104,28 +104,40 @@
           <h2 class="contact-form-title">Send a<br>Message</h2>
           <p class="contact-form-sub">We typically respond within 2–4 business hours.</p>
 
-          <form method="POST" action="/contact/submit/" data-feedback="Message sent! We'll get back to you shortly.">
+          <form method="POST" action="{% url 'contactus' %}">
             {% csrf_token %}
 
             <div class="contact-form-row">
               <div class="form-group">
                 <input type="text" id="contactFirst" name="first_name" placeholder="first" required />
                 <label for="contactFirst">First Name</label>
+                {% if form.first_name.errors %}
+                  <small style="color:red;">{{ form.first_name.errors.0 }}</small>
+                {% endif %}
               </div>
               <div class="form-group">
                 <input type="text" id="contactLast" name="last_name" placeholder="last" required />
                 <label for="contactLast">Last Name</label>
+                {% if form.last_name.errors %}
+                  <small style="color:red;">{{ form.last_name.errors.0 }}</small>
+                {% endif %}
               </div>
             </div>
 
             <div class="form-group">
               <input type="email" id="contactEmail" name="email" placeholder="email" autocomplete="email" required />
               <label for="contactEmail">Email Address</label>
+              {% if form.email.errors %}
+                <small style="color:red;">{{ form.email.errors.0 }}</small>
+              {% endif %}
             </div>
 
             <div class="form-group">
-              <input type="tel" id="contactPhone" name="phone" placeholder="phone" />
+              <input type="tel" id="contactPhone" oninput="this.value = this.value.replace(/[^0-9]/g, '')"  name="phone" placeholder="phone" required/>
               <label for="contactPhone">Phone Number</label>
+              {% if form.phone.errors %}
+                <small style="color:red;">{{ form.phone.errors.0 }}</small>
+              {% endif %}
             </div>
 
             <div class="form-group">
@@ -134,16 +146,22 @@
                 <option value="product">Product Enquiry</option>
                 <option value="booking">Booking Help</option>
                 <option value="delivery">Delivery & Logistics</option>
-                <option value="return">Returns & Warranty</option>
-                <option value="partnership">Partnership / B2B</option>
+                <option value="returns">Returns & Warranty</option>
+                <option value="b2b">Partnership / B2B</option>
                 <option value="other">Other</option>
               </select>
               <label for="contactSubject" style="top:0;font-size:11px;color:var(--accent);">Subject</label>
+              {% if form.subject.errors %}
+                <small style="color:red;">{{ form.subject.errors.0 }}</small>
+              {% endif %}
             </div>
 
             <div class="form-group form-group--textarea">
               <textarea id="contactMessage" name="message" placeholder="message" rows="5" required></textarea>
               <label for="contactMessage">Your Message</label>
+              {% if form.message.errors %}
+                <small style="color:red;">{{ form.message.errors.0 }}</small>
+              {% endif %}
             </div>
 
             <!-- Honeypot (spam protection) -->
