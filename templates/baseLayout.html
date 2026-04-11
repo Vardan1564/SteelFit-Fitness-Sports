@@ -1,195 +1,224 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="SteelFit — Premium Fitness Equipment & Training" />
-  <title>{% block title %}SteelFit — Forge Your Legacy{% endblock %}</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SteelFit — Premium Fitness Equipment & Training" />
+    <title>
+      {% block title %}
+        SteelFit — Forge Your Legacy
+      {% endblock %}
+    </title>
+    <!-- icons url -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-  <!-- Preconnect -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
-  <!-- Favicon (inline SVG placeholder) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231B3C53'/><text y='.9em' font-size='72' x='10'>🏋</text></svg>" />
+    <!-- Favicon (inline SVG placeholder) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231B3C53'/><text y='.9em' font-size='72' x='10'>🏋</text></svg>" />
 
-  {% block extra_head %}{% endblock %}
-</head>
-<body>
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body>
+    <!-- Noise texture overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
 
-<!-- Noise texture overlay -->
-<div class="noise-overlay" aria-hidden="true"></div>
-
-<!-- ══════════════════════════════════════════
+    <!--  ══════════════════════════════════════════
      NAVBAR
-══════════════════════════════════════════ -->
-<nav class="navbar" role="navigation" aria-label="Main navigation">
-  <div class="container">
-    <div class="navbar__inner">
+══════════════════════════════════════════  -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="container">
+        <div class="navbar__inner">
+          <!-- Logo -->
+          <a href="{% url 'home' %}" class="navbar__logo" aria-label="SteelFit Home">Steel<span>Fit</span></a>
 
       <!-- Logo -->
       <a href="{% url "home" %}" class="navbar__logo" aria-label="SteelFit Home">
         Steel<span>Fit</span>
       </a>
 
-      <!-- Desktop Links -->
-      <ul class="navbar__links" role="list">
-        <li><a href="{% url "home" %}" class="navbar__link">Home</a></li>
-        <li><a href="{% url "products" %}" class="navbar__link">Products</a></li>
-        <li><a href="{% url "aboutus" %}" class="navbar__link">About</a></li>
-        <li><a href="{% url "contactus" %}" class="navbar__link">Contact</a></li>
-        {% comment %} {% if user.is_authenticated %} {% endcomment %}
-        <li><a href="{% url "profile" %}" class="navbar__link">Profile</a></li>
-        {% comment %} {% endif %} {% endcomment %}
-      </ul>
+          <!-- Actions -->
+          <div class="navbar__actions">
+            {% comment %} {% if user.is_authenticated %}
+              {% endcomment %}
+              <a href="/profile/" class="btn btn--ghost btn--sm">
+                <span><i class="bi bi-person-fill"></i></span>
+                {% comment %} {{ user.first_name|default:user.username }} {% endcomment %}
+              </a>
+              <a href="/logout/" class="btn btn--outline btn--sm">Logout</a>
+              {% comment %}
+            {% else %}
+              <a href="/login/" class="btn btn--ghost btn--sm">Login</a>
+              <a href="/register/" class="btn btn--primary btn--sm">Register</a>
+            {% endif %} {% endcomment %}
+          </div>
 
-      <!-- Actions -->
-      <div class="navbar__actions">
-        {% comment %} {% if user.is_authenticated %} {% endcomment %}
-          <a href="/profile/" class="btn btn--ghost btn--sm">
-            <span>👤</span>
-             {% comment %} {{ user.first_name|default:user.username }} {% endcomment %}
-          </a>
-          <a href="/logout/" class="btn btn--outline btn--sm">Logout</a>
-        {% comment %} {% else %}
-          <a href="/login/" class="btn btn--ghost btn--sm">Login</a>
-          <a href="/register/" class="btn btn--primary btn--sm">Register</a>
-        {% endif %} {% endcomment %}
+          <!-- Hamburger -->
+          <button class="navbar__hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        </div>
       </div>
+    </nav>
 
-      <!-- Hamburger -->
-      <button class="navbar__hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
+    <!-- Mobile Menu -->
+    <div class="navbar__mobile" role="dialog" aria-label="Mobile menu">
+      <a href="{% url 'home' %}" class="navbar__mobile-link">Home</a>
+      <a href="{% url 'products' %}" class="navbar__mobile-link">Products</a>
+      <a href="{% url 'aboutus' %}" class="navbar__mobile-link">About</a>
+      <a href="{% url 'contactus' %}" class="navbar__mobile-link">Contact</a>
+      {% comment %} {% if user.is_authenticated %}
+        {% endcomment %}
+        <a href="{% url 'profile' %}" class="navbar__mobile-link">Profile</a>
+        <a href="/bookings/" class="navbar__mobile-link">My Bookings</a>
+        <a href="/logout/" class="navbar__mobile-link">Logout</a>
+        {% comment %}
+      {% else %}
+        <a href="/login/" class="navbar__mobile-link">Login</a>
+        <a href="/register/" class="navbar__mobile-link">Register</a>
+      {% endif %} {% endcomment %}
     </div>
-  </div>
-</nav>
 
-<!-- Mobile Menu -->
-<div class="navbar__mobile" role="dialog" aria-label="Mobile menu">
-  <a href="{% url "home" %}" class="navbar__mobile-link">Home</a>
-  <a href="{% url "products" %}" class="navbar__mobile-link">Products</a>
-  <a href="{% url "aboutus" %}" class="navbar__mobile-link">About</a>
-  <a href="{% url "contactus" %}" class="navbar__mobile-link">Contact</a>
-  {% comment %} {% if user.is_authenticated %} {% endcomment %}
-  <a href="{% url "profile" %}" class="navbar__mobile-link">Profile</a>
-  <a href="/bookings/" class="navbar__mobile-link">My Bookings</a>
-  <a href="/logout/" class="navbar__mobile-link">Logout</a>
-  {% comment %} {% else %}
-  <a href="/login/" class="navbar__mobile-link">Login</a>
-  <a href="/register/" class="navbar__mobile-link">Register</a>
-  {% endif %} {% endcomment %}
-</div>
-
-<!-- ══════════════════════════════════════════
+    <!--  ══════════════════════════════════════════
      MAIN CONTENT
-══════════════════════════════════════════ -->
-<main id="main-content">
-  {% if messages %}
-    <div style="position:fixed;top:calc(var(--nav-h) + 16px);right:24px;z-index:999;display:flex;flex-direction:column;gap:10px;">
-      {% for message in messages %}
-        <div style="padding:14px 22px;border-radius:12px;background:rgba(13,31,45,0.95);backdrop-filter:blur(16px);border:1px solid {% if message.tags == 'success' %}rgba(76,175,132,0.4){% elif message.tags == 'error' %}rgba(224,82,82,0.4){% else %}rgba(69,104,130,0.4){% endif %};color:#F4EDE8;font-size:14px;font-family:'Poppins',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,0.4);">
-          {{ message }}
+══════════════════════════════════════════  -->
+    <main id="main-content">
+      {% if messages %}
+        <div style="position:fixed;top:calc(var(--nav-h) + 16px);right:24px;z-index:999;display:flex;flex-direction:column;gap:10px;">
+          {% for message in messages %}
+            <div style="padding:14px 22px;border-radius:12px;background:rgba(13,31,45,0.95);backdrop-filter:blur(16px);border:1px solid {% if message.tags == 'success' %}
+                rgba(76,175,132,0.4)
+              {% elif message.tags == 'error' %}
+                rgba(224,82,82,0.4)
+              {% else %}
+                rgba(69,104,130,0.4)
+              {% endif %};color:#F4EDE8;font-size:14px;font-family:'Poppins',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,0.4);">{{ message }}</div>
+          {% endfor %}
         </div>
-      {% endfor %}
-    </div>
-  {% endif %}
+      {% endif %}
 
-  {% comment %} main block {% endcomment %}
-  {% block content %}
-  
-  
-  {% endblock %}
-</main>
+      {% comment %}main block{% endcomment %}
+      {% block content %}
 
-<!-- ══════════════════════════════════════════
+      {% endblock %}
+    </main>
+
+    <!--  ══════════════════════════════════════════
      FOOTER
-══════════════════════════════════════════ -->
-{% block footer %}
-<footer class="footer" role="contentinfo">
-  <div class="container">
-    <div class="footer__grid">
+══════════════════════════════════════════  -->
+    {% block footer %}
+      <footer class="footer" role="contentinfo">
+        <div class="container">
+          <div class="footer__grid">
+            <!-- Brand -->
+            <div>
+              <div class="footer__brand-logo">
+                Steel<span>Fit</span>
+              </div>
+              <p class="footer__brand-text">Premium fitness equipment designed to push your limits. Forge strength. Build legacy. Live steel.</p>
+              <div class="footer__socials">
+                <a href="#" class="footer__social" aria-label="Instagram">
+                  <i class="bi bi-instagram"></i>
+                </a>
+                <a href="#" class="footer__social" aria-label="Twitter">
+                  <i class="bi bi-twitter-x"></i>
+                </a>
+                <a href="#" class="footer__social" aria-label="YouTube">
+                  <i class="bi bi-youtube"></i>
+                </a>
+                <a href="#" class="footer__social" aria-label="Facebook">
+                  <i class="bi bi-facebook"></i>
+                </a>
+              </div>
+            </div>
 
-      <!-- Brand -->
-      <div>
-        <div class="footer__brand-logo">Steel<span>Fit</span></div>
-        <p class="footer__brand-text">
-          Premium fitness equipment designed to push your limits. Forge strength. Build legacy. Live steel.
-        </p>
-        <div class="footer__socials">
-          <a href="#" class="footer__social" aria-label="Instagram">📸</a>
-          <a href="#" class="footer__social" aria-label="Twitter">🐦</a>
-          <a href="#" class="footer__social" aria-label="YouTube">▶️</a>
-          <a href="#" class="footer__social" aria-label="Facebook">👥</a>
+            <!-- Links -->
+            <div>
+              <h4 class="footer__col-title">Explore</h4>
+              <ul class="footer__links">
+                <li>
+                  <a href="{% url 'home' %}" class="footer__link">→ Home</a>
+                </li>
+                <li>
+                  <a href="{% url 'products' %}" class="footer__link">→ Products</a>
+                </li>
+                <li>
+                  <a href="{% url 'aboutus' %}" class="footer__link">→ About Us</a>
+                </li>
+                <li>
+                  <a href="{% url 'contactus' %}" class="footer__link">→ Contact</a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Account -->
+            <div>
+              <h4 class="footer__col-title">Account</h4>
+              <ul class="footer__links">
+                <li>
+                  <a href="#" class="footer__link">→ Login</a>
+                </li>
+                <li>
+                  <a href="#" class="footer__link">→ Register</a>
+                </li>
+                <li>
+                  <a href="{% url 'profile' %}" class="footer__link">→ My Profile</a>
+                </li>
+                <li>
+                  <a href="/bookings/" class="footer__link">→ Booking History</a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contact -->
+            <div>
+              <h4 class="footer__col-title">Contact</h4>
+
+              <div>
+                <div class="footer__contact-item">
+                  <span class="material-symbols-outlined"><i class="bi bi-geo-alt"></i></span>
+                  <span>SteelFit HQ, Fitness Street,<br />Mumbai, Maharashtra 400001</span>
+                </div>
+
+                <div class="footer__contact-item">
+                  <span class="material-symbols-outlined"><i class="bi bi-telephone"></i></span>
+                  <span>+91 98765 43210</span>
+                </div>
+
+                <div class="footer__contact-item">
+                  <span class="material-symbols-outlined"><i class="bi bi-envelope"></i></span>
+                  <span>hello@steelfit.in</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer__bottom">
+            <p class="footer__copy">
+              ©{% now 'Y' %}SteelFit. All rights reserved. Built with 💪
+            </p>
+            <div class="footer__bottom-links">
+              <a href="#" class="footer__bottom-link">Privacy Policy</a>
+              <a href="#" class="footer__bottom-link">Terms of Service</a>
+              <a href="#" class="footer__bottom-link">Returns</a>
+            </div>
+          </div>
         </div>
-      </div>
+      </footer>
+    {% endblock %}
 
-      <!-- Links -->
-      <div>
-        <h4 class="footer__col-title">Explore</h4>
-        <ul class="footer__links">
-          <li><a href="/" class="footer__link">→ Home</a></li>
-          <li><a href="/products/" class="footer__link">→ Products</a></li>
-          <li><a href="/about/" class="footer__link">→ About Us</a></li>
-          <li><a href="/contact/" class="footer__link">→ Contact</a></li>
-        </ul>
-      </div>
-
-      <!-- Account -->
-      <div>
-        <h4 class="footer__col-title">Account</h4>
-        <ul class="footer__links">
-          <li><a href="/login/" class="footer__link">→ Login</a></li>
-          <li><a href="/register/" class="footer__link">→ Register</a></li>
-          <li><a href="/profile/" class="footer__link">→ My Profile</a></li>
-          <li><a href="/bookings/" class="footer__link">→ Booking History</a></li>
-        </ul>
-      </div>
-
-      <!-- Contact -->
-      <div>
-        <h4 class="footer__col-title">Contact</h4>
-        <div>
-          <div class="footer__contact-item">
-            <span>📍</span>
-            <span>SteelFit HQ, Fitness Street,<br>Mumbai, Maharashtra 400001</span>
-          </div>
-          <div class="footer__contact-item">
-            <span>📞</span>
-            <span>+91 98765 43210</span>
-          </div>
-          <div class="footer__contact-item">
-            <span>✉️</span>
-            <span>hello@steelfit.in</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="footer__bottom">
-      <p class="footer__copy">© {% now "Y" %} SteelFit. All rights reserved. Built with 💪</p>
-      <div class="footer__bottom-links">
-        <a href="#" class="footer__bottom-link">Privacy Policy</a>
-        <a href="#" class="footer__bottom-link">Terms of Service</a>
-        <a href="#" class="footer__bottom-link">Returns</a>
-      </div>
-    </div>
-  </div>
-</footer>
-{% endblock %}
-
-<!-- Scripts -->
-<script src="{% static 'js/script.js' %}"></script>
-{% block extra_scripts %}{% endblock %}
-
-</body>
+    <!-- Scripts -->
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_scripts %}
+    {% endblock %}
+  </body>
 </html>
