@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register - SteelFit</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+<body>
+<div class="auth-page">
+
+  <!-- LEFT PANEL SAME -->
+  <div class="auth-page__panel">
+    <div class="auth-page__panel-bg"></div>
+    <a href="/" class="auth-page__panel-logo">Steel<span>Fit</span></a>
+
+    <p class="auth-page__panel-text">
+      FORGE<br><span>YOUR</span><br>LEGEND
+    </p>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="auth-page__form-side">
+
+    <div class="auth-form">
+      <h1 class="auth-form__title">Join the<br>Steel Army</h1>
+
+      <p class="auth-form__subtitle">
+        Already a member?
+        <a href="{% url 'login' %}">Sign in →</a>
+      </p>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <input type="text" name="username" placeholder="username" required />
+          <label>Username</label>
+        </div>
+
+        <div class="form-group">
+          <input type="email" name="email" placeholder="email" required />
+          <label>Email Address</label>
+        </div>
+
+        <div class="form-group">
+          <input type="password" name="password1" placeholder="password" required />
+          <label>Password</label>
+        </div>
+
+        <div class="form-group">
+          <input type="password" name="password2" placeholder="confirm" required />
+          <label>Confirm Password</label>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--full btn--lg">
+          <span>⚡</span> Create Account
+        </button>
+        <br><br>
+      <div style="display:flex;gap:12px;">
+        <a href="/auth/google/" class="btn btn--ghost btn--full" style="justify-content:center;">
+          🌐 Continue with Google
+        </a>
+      </div>
+      </form>
+        
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
