@@ -1,28 +1,32 @@
-{% comment %} {% extends "baseLayout.html" %}
-{% block title %}My Profile — SteelFit{% endblock %}
-
-{% block content %}
+{% extends 'baseLayout.html' %} 
+{% block title %} My Profile - SteelFit {%endblock %}
+ {% block content %}
 <div class="profile-page">
-
   <!-- Hero -->
   <div class="profile-page__hero">
     <div class="container">
       <div class="profile-hero-inner">
         <div class="profile-avatar">
-          {{ user.first_name|slice:":1"|default:"U" }}
+          {{ user.first_name|slice:':1'|default:'S' }}
           <div class="profile-avatar__edit" title="Change photo">📷</div>
         </div>
+
         <div class="profile-hero-info">
-          <h1 class="profile-hero-name">{{ user.get_full_name|default:user.username|default:"Steel Athlete" }}</h1>
-          <p class="profile-hero-email">{{ user.email|default:"athlete@steelfit.in" }}</p>
+          <h1 class="profile-hero-name">
+            {{ user.get_full_name|default:user.username|default:'Steel Athlete'}}
+          </h1>
+
+          <p class="profile-hero-email">
+            {{ user.email|default:'athlete@steelfit.in' }}
+          </p>
+
           <div class="profile-hero-badges">
             <span class="badge badge--success">✅ Verified Member</span>
             <span class="badge badge--muted">🏋️ Pro Plan</span>
           </div>
         </div>
-        <div style="margin-left:auto;">
-          <a href="/logout/" class="btn btn--outline btn--sm">Logout</a>
-        </div>
+
+        
       </div>
     </div>
   </div>
@@ -30,39 +34,60 @@
   <!-- Body -->
   <div class="container">
     <div class="profile-layout">
-
       <!-- Sidebar -->
-      <aside class="profile-sidebar">
-        <nav class="profile-nav" aria-label="Profile navigation">
-          <div class="profile-nav-item active" data-tab="tab-personal">
-            <span>👤</span> Personal Info
-          </div>
-          <div class="profile-nav-item" data-tab="tab-security">
-            <span>🔒</span> Security
-          </div>
-          <div class="profile-nav-item" data-tab="tab-bookings">
-            <span>📋</span> Bookings
-          </div>
-          <div class="profile-nav-item" data-tab="tab-settings">
-            <span>⚙️</span> Settings
-          </div>
-        </nav>
+      <aside>
+        <div class="profile-sidebar">
+          <nav class="profile-nav" aria-label="Profile navigation">
+            <button
+              type="button"
+              class="profile-nav-item active"
+              data-tab="tab-personal"
+            >
+              <span>👤</span> Personal Info
+            </button>
 
-        <!-- Stats Card -->
+            <button
+              type="button"
+              class="profile-nav-item"
+              data-tab="tab-security"
+            >
+              <span>🔒</span> Security
+            </button>
+
+            <button
+              type="button"
+              class="profile-nav-item"
+              data-tab="tab-bookings"
+            >
+              <span>📋</span> Bookings
+            </button>
+          </nav>
+        </div>
+
         <div class="profile-stats">
           <div class="profile-stats__title">My Activity</div>
+
           <div class="profile-stat">
             <span class="profile-stat__label">Total Bookings</span>
-            <span class="profile-stat__value">{{ user.bookings.count|default:"7" }}</span>
+            <span class="profile-stat__value"
+              >{{ user.bookings.count|default:'7' }}</span
+            >
           </div>
+
           <div class="profile-stat">
             <span class="profile-stat__label">Member Since</span>
-            <span class="profile-stat__value">{{ user.date_joined|date:"M Y"|default:"Jan 2024" }}</span>
+            <span class="profile-stat__value"
+              >{{ user.date_joined|date:'M Y'|default:'Jan 2024' }}</span
+            >
           </div>
+
           <div class="profile-stat">
             <span class="profile-stat__label">Reviews Given</span>
-            <span class="profile-stat__value">{{ user.reviews.count|default:"3" }}</span>
+            <span class="profile-stat__value"
+              >{{ user.reviews.count|default:'3' }}</span
+            >
           </div>
+
           <div class="profile-stat">
             <span class="profile-stat__label">Loyalty Points</span>
             <span class="profile-stat__value">2,450 pts</span>
@@ -71,330 +96,235 @@
       </aside>
 
       <!-- Content -->
-      <div class="profile-content">
-
-        <!-- Personal Info Tab -->
-        <div id="tab-personal" class="profile-tab-panel">
+      <main class="profile-content">
+        <!-- Personal Info -->
+        <section id="tab-personal" class="profile-tab-panel active">
           <div class="profile-section-card">
             <div class="profile-section-card__header">
               <h2 class="profile-section-card__title">Personal Information</h2>
-              <button class="btn btn--ghost btn--sm" id="editPersonalBtn">✏️ Edit</button>
             </div>
 
-            <form method="POST" action="/profile/update/" data-feedback="Profile updated successfully!">
+            <form method="POST" action="/profile/update/">
               {% csrf_token %}
+
               <div class="profile-form-grid">
-                <div class="form-group">
-                  <input type="text" id="profFirst" name="first_name" value="{{ user.first_name|default:'Steel' }}" placeholder="first" />
+                <div class="profile-field">
                   <label for="profFirst">First Name</label>
+                  <input
+                    type="text"
+                    id="profFirst"
+                    name="first_name"
+                    value="{{ user.first_name|default:'Steel' }}"
+                    placeholder=" "
+                  />
                 </div>
-                <div class="form-group">
-                  <input type="text" id="profLast" name="last_name" value="{{ user.last_name|default:'Athlete' }}" placeholder="last" />
+
+                <div class="profile-field">
                   <label for="profLast">Last Name</label>
+                  <input
+                    type="text"
+                    id="profLast"
+                    name="last_name"
+                    value="{{ user.last_name|default:'Athlete' }}"
+                    placeholder=" "
+                  />
                 </div>
-                <div class="form-group">
-                  <input type="email" id="profEmail" name="email" value="{{ user.email|default:'athlete@steelfit.in' }}" placeholder="email" />
+
+                <div class="profile-field profile-field--full">
                   <label for="profEmail">Email Address</label>
+                  <input
+                    type="email"
+                    id="profEmail"
+                    name="email"
+                    value="{{ user.email|default:'athlete@steelfit.in' }}"
+                    placeholder=" "
+                  />
                 </div>
-                <div class="form-group">
-                  <input type="tel" id="profPhone" name="phone" value="{{ user.profile.phone|default:'+91 98765 43210' }}" placeholder="phone" />
+
+                <div class="profile-field">
                   <label for="profPhone">Phone Number</label>
+                  <input
+                    type="tel"
+                    id="profPhone"
+                    name="phone"
+                    value="{{ user.profile.phone|default:'+91 98765 43210' }}"
+                    placeholder=" "
+                  />
                 </div>
-                <div class="form-group" style="grid-column:span 2;">
-                  <input type="text" id="profAddress" name="address" value="{{ user.profile.address|default:'' }}" placeholder="address" />
+
+                <div class="profile-field">
+                  <label for="profCity">City</label>
+                  <input
+                    type="text"
+                    id="profCity"
+                    name="city"
+                    value="{{ user.profile.city|default:'' }}"
+                    placeholder=" "
+                  />
+                </div>
+
+                <div class="profile-field profile-field--full">
                   <label for="profAddress">Address</label>
+                  <textarea id="profAddress" name="address" placeholder=" ">
+{{ user.profile.address|default:'' }}</textarea
+                  >
                 </div>
               </div>
-              <div style="margin-top:24px;">
-                <button type="submit" class="btn btn--primary">Save Changes</button>
+
+              <div class="profile-actions">
+                <button type="submit" class="btn btn--primary">
+                  Save Changes
+                </button>
               </div>
             </form>
           </div>
-        </div>
+        </section>
 
-        <!-- Security Tab -->
-        <div id="tab-security" class="profile-tab-panel" style="display:none;">
+        <!-- Security -->
+        <section id="tab-security" class="profile-tab-panel">
           <div class="profile-section-card">
             <div class="profile-section-card__header">
               <h2 class="profile-section-card__title">Change Password</h2>
             </div>
-            <form method="POST" action="/profile/change-password/" data-feedback="Password changed successfully!">
+
+            <form method="POST" action="/profile/change-password/">
               {% csrf_token %}
-              <div style="display:flex;flex-direction:column;gap:20px;max-width:420px;">
-                <div class="form-group">
-                  <input type="password" id="currentPwd" name="current_password" placeholder="current" required />
+
+              <div class="security-stack">
+                <div class="profile-field">
                   <label for="currentPwd">Current Password</label>
+                  <input
+                    type="password"
+                    id="currentPwd"
+                    name="current_password"
+                    placeholder=" "
+                    required
+                  />
                 </div>
-                <div class="form-group">
-                  <input type="password" id="newPwd" name="new_password1" placeholder="new" required />
+
+                <div class="profile-field">
                   <label for="newPwd">New Password</label>
+                  <input
+                    type="password"
+                    id="newPwd"
+                    name="new_password1"
+                    placeholder=" "
+                    required
+                  />
                 </div>
-                <div class="form-group">
-                  <input type="password" id="newPwd2" name="new_password2" placeholder="confirm" required />
-                  <label for="newPwd2">Confirm New Password</label>
+
+                <div class="profile-field">
+                  <label for="newPwd2">Confirm Password</label>
+                  <input
+                    type="password"
+                    id="newPwd2"
+                    name="new_password2"
+                    placeholder=" "
+                    required
+                  />
                 </div>
-                <div>
-                  <button type="submit" class="btn btn--primary">Update Password</button>
+
+                <div class="profile-actions">
+                  <button type="submit" class="btn btn--primary">
+                    Update Password
+                  </button>
                 </div>
               </div>
             </form>
           </div>
+        </section>
 
-          <div class="profile-section-card">
-            <div class="profile-section-card__header">
-              <h2 class="profile-section-card__title">Security Settings</h2>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:16px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
-                <div>
-                  <div style="font-weight:600;color:var(--white);margin-bottom:4px;">Two-Factor Authentication</div>
-                  <div style="font-size:13px;color:var(--text-muted);">Add an extra layer of security to your account</div>
-                </div>
-                <button class="btn btn--outline btn--sm">Enable</button>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;">
-                <div>
-                  <div style="font-weight:600;color:var(--white);margin-bottom:4px;">Login Notifications</div>
-                  <div style="font-size:13px;color:var(--text-muted);">Get notified on new device logins</div>
-                </div>
-                <button class="btn btn--ghost btn--sm">Enabled ✓</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bookings Tab -->
-        <div id="tab-bookings" class="profile-tab-panel" style="display:none;">
+        <!-- Bookings -->
+        <section id="tab-bookings" class="profile-tab-panel">
           <div class="profile-section-card">
             <div class="profile-section-card__header">
               <h2 class="profile-section-card__title">Recent Bookings</h2>
-              <a href="/bookings/" class="btn btn--ghost btn--sm">View All →</a>
+              <a href="/bookings/" class="btn btn--ghost btn--sm">View All</a>
             </div>
-            {% for booking in recent_bookings %}
-            <div class="booking-card" style="margin-bottom:16px;">
-              <div class="booking-card__header">
-                <div class="booking-card__product">
-                  <div class="booking-card__img">🏋️</div>
-                  <div>
-                    <div class="booking-card__name">{{ booking.product.name }}</div>
-                    <div class="booking-card__sub">{{ booking.created_at|date:"M d, Y" }}</div>
-                  </div>
-                </div>
-                <span class="badge badge--{% if booking.status == 'confirmed' %}success{% elif booking.status == 'pending' %}warning{% else %}danger{% endif %}">
-                  {{ booking.status|title }}
-                </span>
-              </div>
-            </div>
-            {% empty %}
-            <!-- Static fallback -->
-            <div style="text-align:center;padding:48px 0;color:var(--text-muted);">
-              <div style="font-size:48px;margin-bottom:16px;">📦</div>
-              <div style="font-family:var(--font-heading);font-size:18px;font-weight:700;text-transform:uppercase;color:var(--white);margin-bottom:8px;">No Bookings Yet</div>
-              <p style="font-size:14px;margin-bottom:24px;">Browse our collection and book your first product.</p>
-              <a href="/products/" class="btn btn--primary">Explore Products →</a>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
 
-        <!-- Settings Tab -->
-        <div id="tab-settings" class="profile-tab-panel" style="display:none;">
-          <div class="profile-section-card">
-            <div class="profile-section-card__header">
-              <h2 class="profile-section-card__title">Preferences</h2>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:0;">
-              {% for label, sublabel in settings_options %}
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
-                <div>
-                  <div style="font-weight:600;color:var(--white);margin-bottom:3px;">{{ label }}</div>
-                  <div style="font-size:13px;color:var(--text-muted);">{{ sublabel }}</div>
+            <div class="booking-list">
+              {% for booking in recent_bookings %}
+              <div class="booking-card">
+                <div class="booking-card__header">
+                  <div class="booking-card__product">
+                    <div class="booking-card__img">🏋️</div>
+
+                    <div>
+                      <div class="booking-card__name">
+                        {{ booking.product.name }}
+                      </div>
+                      <div class="booking-card__sub">
+                        {{ booking.created_at|date:'M d, Y' }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <span
+                    class="badge badge--{% if booking.status == 'confirmed' %} success {% elif booking.status == 'pending' %} warning {% else %} danger {% endif %}"
+                  >
+                    {{ booking.status|title }}
+                  </span>
                 </div>
-                <label class="filter-checkbox" style="margin-bottom:0;">
-                  <input type="checkbox" checked />
-                  <span class="filter-checkbox__box"></span>
-                </label>
               </div>
               {% empty %}
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
-                <div><div style="font-weight:600;color:var(--white);margin-bottom:3px;">Email Notifications</div><div style="font-size:13px;color:var(--text-muted);">Receive booking updates via email</div></div>
-                <label class="filter-checkbox" style="margin-bottom:0;"><input type="checkbox" checked /><span class="filter-checkbox__box"></span></label>
+              <div class="booking-card">
+                <div class="booking-card__header">
+                  <div class="booking-card__product">
+                    <div class="booking-card__img">🏋️</div>
+
+                    <div>
+                      <div class="booking-card__name">Gym Equipment</div>
+                      <div class="booking-card__sub">Mar 12, 2026</div>
+                    </div>
+                  </div>
+
+                  <span class="badge badge--success">Confirmed</span>
+                </div>
               </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
-                <div><div style="font-weight:600;color:var(--white);margin-bottom:3px;">SMS Alerts</div><div style="font-size:13px;color:var(--text-muted);">Get booking confirmations via SMS</div></div>
-                <label class="filter-checkbox" style="margin-bottom:0;"><input type="checkbox" /><span class="filter-checkbox__box"></span></label>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
-                <div><div style="font-weight:600;color:var(--white);margin-bottom:3px;">Product Launches</div><div style="font-size:13px;color:var(--text-muted);">Be first to know about new arrivals</div></div>
-                <label class="filter-checkbox" style="margin-bottom:0;"><input type="checkbox" checked /><span class="filter-checkbox__box"></span></label>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 0;">
-                <div><div style="font-weight:600;color:var(--white);margin-bottom:3px;">Newsletter</div><div style="font-size:13px;color:var(--text-muted);">Weekly fitness tips and deals</div></div>
-                <label class="filter-checkbox" style="margin-bottom:0;"><input type="checkbox" checked /><span class="filter-checkbox__box"></span></label>
+
+              <div class="empty-bookings">
+                <div class="empty-bookings__icon">📦</div>
+                <div class="empty-bookings__title">No Bookings Yet</div>
+                <p>Browse our collection and book your first product.</p>
+                <a href="/products/" class="btn btn--primary"
+                  >Explore Products</a
+                >
               </div>
               {% endfor %}
             </div>
-            <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.05);">
-              <button class="btn btn--danger" style="background:rgba(224,82,82,0.1);color:#E05252;border:1px solid rgba(224,82,82,0.3);" onclick="confirm('Are you sure you want to delete your account? This cannot be undone.')">
-                🗑️ Delete Account
-              </button>
-            </div>
           </div>
-        </div>
-
-      </div><!-- /profile-content -->
-    </div><!-- /profile-layout -->
-  </div><!-- /container -->
-</div>
-{% endblock %} {% endcomment %}
-
-
-
-{% comment %} html versoin {% endcomment %}
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Profile — SteelFit</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  
-</head>
-<body>
-
-<div class="profile-page">
-
-  <!-- Hero -->
-  <div class="profile-page__hero">
-    <div class="container">
-      <div class="profile-hero-inner">
-        <div class="profile-avatar">
-          <div class="profile-avatar__edit" title="Change photo">📷</div>
-        </div>
-        <div class="profile-hero-info">
-          <h1 class="profile-hero-name">Steel Athlete</h1>
-          <p class="profile-hero-email">athlete@steelfit.in</p>
-          <div class="profile-hero-badges">
-            <span class="badge badge--success">✅ Verified Member</span>
-            <span class="badge badge--muted">🏋️ Pro Plan</span>
-          </div>
-        </div>
-        <div style="margin-left:auto;">
-          <a href="#" class="btn btn--outline btn--sm">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Body -->
-  <div class="container">
-    <div class="profile-layout">
-
-      <!-- Sidebar -->
-      <aside class="profile-sidebar">
-        <nav class="profile-nav">
-          <div class="profile-nav-item active">👤 Personal Info</div>
-          <div class="profile-nav-item">🔒 Security</div>
-          <div class="profile-nav-item">📋 Bookings</div>
-          <div class="profile-nav-item">⚙️ Settings</div>
-        </nav>
-
-        <!-- Stats -->
-        <div class="profile-stats">
-          <div class="profile-stats__title">My Activity</div>
-          <div class="profile-stat">
-            <span>Total Bookings</span>
-            <span>7</span>
-          </div>
-          <div class="profile-stat">
-            <span>Member Since</span>
-            <span>Jan 2024</span>
-          </div>
-          <div class="profile-stat">
-            <span>Reviews Given</span>
-            <span>3</span>
-          </div>
-          <div class="profile-stat">
-            <span>Loyalty Points</span>
-            <span>2,450 pts</span>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Content -->
-      <div class="profile-content">
-
-        <!-- Personal Info -->
-        <div class="profile-tab-panel">
-          <div class="profile-section-card">
-            <h2>Personal Information</h2>
-
-            <form>
-              <input type="text" value="Steel" placeholder="First Name" />
-              <input type="text" value="Athlete" placeholder="Last Name" />
-              <input type="email" value="athlete@steelfit.in" placeholder="Email" />
-              <input type="tel" value="+91 98765 43210" placeholder="Phone" />
-              <input type="text" placeholder="Address" />
-
-              <button type="submit">Save Changes</button>
-            </form>
-          </div>
-        </div>
-
-        <!-- Security -->
-        <div class="profile-tab-panel">
-          <div class="profile-section-card">
-            <h2>Change Password</h2>
-            <form>
-              <input type="password" placeholder="Current Password" />
-              <input type="password" placeholder="New Password" />
-              <input type="password" placeholder="Confirm Password" />
-              <button type="submit">Update Password</button>
-            </form>
-          </div>
-        </div>
-
-        <!-- Bookings -->
-        <div class="profile-tab-panel">
-          <div class="profile-section-card">
-            <h2>Recent Bookings</h2>
-
-            <div class="booking-card">
-              <p>🏋️ Gym Equipment</p>
-              <p>Mar 12, 2026</p>
-              <span>Confirmed</span>
-            </div>
-
-            <div class="booking-card">
-              <p>📦 No Bookings Yet</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Settings -->
-        <div class="profile-tab-panel">
-          <div class="profile-section-card">
-            <h2>Preferences</h2>
-
-            <label><input type="checkbox" checked /> Email Notifications</label>
-            <label><input type="checkbox" /> SMS Alerts</label>
-            <label><input type="checkbox" checked /> Product Launches</label>
-            <label><input type="checkbox" checked /> Newsletter</label>
-
-            <button>Delete Account</button>
-          </div>
-        </div>
-
-      </div>
+        </section>
+      </main>
     </div>
   </div>
 </div>
 
-<!-- JS -->
-<script src="{% static 'js/script.js' %}"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const navItems = document.querySelectorAll(".profile-nav-item");
+    const panels = document.querySelectorAll(".profile-tab-panel");
 
-</body>
-</html>
+    navItems.forEach(function (item) {
+      item.addEventListener("click", function () {
+        const target = item.getAttribute("data-tab");
+
+        navItems.forEach(function (nav) {
+          nav.classList.remove("active");
+        });
+
+        panels.forEach(function (panel) {
+          panel.classList.remove("active");
+        });
+
+        item.classList.add("active");
+
+        const activePanel = document.getElementById(target);
+
+        if (activePanel) {
+          activePanel.classList.add("active");
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}
