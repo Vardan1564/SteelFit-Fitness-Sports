@@ -393,7 +393,9 @@ select {
    ============================================================ */
 .navbar {
     position: fixed;
-    top: 0;
+    /* keep this if you want sticky navbar */
+    top: 0px;
+    /* push it down */
     left: 0;
     right: 0;
     height: var(--nav-h);
@@ -470,6 +472,7 @@ select {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-top: 10px;
 }
 
 .navbar__hamburger {
@@ -2143,34 +2146,64 @@ select {
    ============================================================ */
 .profile-page {
     padding-top: var(--nav-h);
-    min-height: 100vh;
-    background: var(--darker);
+    /* min-height: 100vh;
+    background: var(--darker); */
 }
 
+/* ============================================================
+   PROFILE HERO TEXTURE
+   Same grid texture as Contact hero
+   ============================================================ */
+/* ============================================================
+   PROFILE HERO GRID TEXTURE - FINAL
+   Same texture feel as Contact hero
+   Paste at the very bottom of style.css
+   ============================================================ */
+
 .profile-page__hero {
-    background: linear-gradient(135deg, var(--dark), var(--darker));
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 60px 0 0;
-    position: relative;
-    overflow: hidden;
+    position: relative !important;
+    overflow: hidden !important;
+    background: linear-gradient(135deg, var(--dark), var(--darker)) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 54px 0 64px !important;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
 }
 
 .profile-page__hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
     background:
-        radial-gradient(ellipse at 30% 50%, rgba(35, 76, 106, 0.25) 0%, transparent 60%);
+        radial-gradient(ellipse at 18% 48%, rgba(35, 76, 106, 0.28) 0%, transparent 58%),
+        linear-gradient(90deg, rgba(2, 11, 18, 0.1), rgba(2, 11, 18, 0.45)) !important;
 }
 
-.profile-hero-inner {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: flex-end;
-    gap: 32px;
-    padding-bottom: 32px;
+.profile-page__hero::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    opacity: 0.42 !important;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px) !important;
+    background-size: 40px 40px !important;
 }
+
+.profile-page__hero .container,
+.profile-page__hero .profile-hero-inner {
+    position: relative !important;
+    z-index: 2 !important;
+
+    align-items: center !important;
+    padding-bottom: 0 !important;
+}
+
 
 .profile-avatar {
     width: 120px;
@@ -2186,6 +2219,7 @@ select {
     color: var(--dark);
     flex-shrink: 0;
     position: relative;
+    margin-top: 0;
 }
 
 .profile-avatar__edit {
@@ -2210,6 +2244,7 @@ select {
 
 .profile-hero-info {
     flex: 1;
+     padding-top: 8px;
 }
 
 .profile-hero-name {
@@ -3250,5 +3285,213 @@ select {
     .profile-hero-inner {
         flex-direction: column;
         align-items: flex-start;
+    }
+}
+
+/* ============================================================
+   PROFILE 
+   ============================================================ */
+
+.profile-tab-panel {
+    display: none;
+}
+
+.profile-tab-panel.active {
+    display: block;
+}
+
+.profile-sidebar button.profile-nav-item {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: left;
+}
+
+.profile-form-grid {
+    gap: 24px 22px;
+}
+
+.profile-field {
+    position: relative;
+}
+
+.profile-field--full {
+    grid-column: 1 / -1;
+}
+
+.profile-field label {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    z-index: 2;
+    transform: translateY(-50%);
+    background: transparent;
+    color: var(--text-muted);
+    padding: 0 7px;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    line-height: 1;
+    pointer-events: none;
+    transition: 0.22s ease;
+}
+
+.profile-field:has(textarea) label {
+    top: 22px;
+    transform: none;
+}
+
+.profile-field:has(input:focus) label,
+.profile-field:has(input:not(:placeholder-shown)) label,
+.profile-field:has(textarea:focus) label,
+.profile-field:has(textarea:not(:placeholder-shown)) label {
+    top: 0;
+    transform: translateY(-50%);
+    background: var(--darker);
+    color: var(--accent);
+    font-size: 11px;
+}
+
+.profile-field input,
+.profile-field textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 18px 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: var(--light);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    outline: none;
+    transition: 0.22s ease;
+}
+
+.profile-field textarea {
+    min-height: 116px;
+    resize: vertical;
+    padding-top: 22px;
+}
+
+.profile-field input::placeholder,
+.profile-field textarea::placeholder {
+    color: transparent;
+}
+
+.profile-field input:focus,
+.profile-field textarea:focus {
+    border-color: var(--accent);
+    background: rgba(210, 193, 182, 0.05);
+    box-shadow: 0 0 0 3px rgba(210, 193, 182, 0.12);
+}
+
+.profile-section-card {
+    padding: 30px 32px;
+}
+
+.profile-section-card__header {
+    margin-bottom: 26px;
+}
+
+.profile-section-card h2,
+.profile-section-card__title {
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+.security-stack {
+    max-width: 560px;
+    display: grid;
+    gap: 22px;
+}
+
+.profile-actions {
+    margin-top: 26px;
+}
+
+.profile-actions .btn {
+    min-height: 44px;
+    padding: 12px 26px;
+}
+
+/* Recent bookings spacing */
+.booking-list {
+    display: grid;
+    gap: 18px;
+}
+
+.booking-card {
+    padding: 22px 24px;
+}
+
+.booking-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+}
+
+.booking-card__product {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.booking-card__img {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: rgba(86, 166, 215, 0.16);
+    font-size: 20px;
+}
+
+.booking-card__name {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 5px;
+}
+
+.booking-card__sub {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.empty-bookings {
+    text-align: center;
+    padding: 38px 20px;
+    border: 1px dashed rgba(210, 193, 182, 0.2);
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+}
+
+.empty-bookings__icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.empty-bookings__title {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+    .profile-field--full {
+        grid-column: auto;
+    }
+
+    .booking-card__header {
+        align-items: flex-start;
+        flex-direction: column;
     }
 }
