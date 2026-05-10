@@ -57,29 +57,29 @@
             <li>
               <a href="{% url 'contactus' %}" class="navbar__link">Contact</a>
             </li>
-            {% comment %} {% if user.is_authenticated %}
-              {% endcomment %}
+             {% if user.is_authenticated %}
+              
               <li>
                 <a href="{% url 'profile' %}" class="navbar__link">Profile</a>
               </li>
-              {% comment %}
-            {% endif %} {% endcomment %}
+              
+            {% endif %} 
           </ul>
 
           <!-- Actions -->
           <div class="navbar__actions">
-            {% comment %} {% if user.is_authenticated %}
-              {% endcomment %}
+             {% if user.is_authenticated %}
+              
               <a href="/profile/" class="btn btn--ghost btn--sm">
                 <span><i class="bi bi-person-fill"></i></span>
-                {% comment %} {{ user.first_name|default:user.username }} {% endcomment %}
+                 {{ user.first_name|default:user.username }} 
               </a>
-              <a href="/logout/" class="btn btn--outline btn--sm">Logout</a>
-              {% comment %}
+              <a href="{% url 'logout' %}" class="btn btn--outline btn--sm">Logout</a>
+              
             {% else %}
-              <a href="/login/" class="btn btn--ghost btn--sm">Login</a>
-              <a href="/register/" class="btn btn--primary btn--sm">Register</a>
-            {% endif %} {% endcomment %}
+              <a href="{% url 'login' %}" class="btn btn--ghost btn--sm">Login</a>
+              <a href="{% url 'register' %}" class="btn btn--primary btn--sm">Register</a>
+            {% endif %} 
           </div>
 
           <!-- Hamburger -->
@@ -94,16 +94,16 @@
       <a href="{% url 'products' %}" class="navbar__mobile-link">Products</a>
       <a href="{% url 'aboutus' %}" class="navbar__mobile-link">About</a>
       <a href="{% url 'contactus' %}" class="navbar__mobile-link">Contact</a>
-      {% comment %} {% if user.is_authenticated %}
-        {% endcomment %}
+       {% if user.is_authenticated %}
+        
         <a href="{% url 'profile' %}" class="navbar__mobile-link">Profile</a>
         <a href="/bookings/" class="navbar__mobile-link">My Bookings</a>
         <a href="/logout/" class="navbar__mobile-link">Logout</a>
-        {% comment %}
+        
       {% else %}
         <a href="/login/" class="navbar__mobile-link">Login</a>
         <a href="/register/" class="navbar__mobile-link">Register</a>
-      {% endif %} {% endcomment %}
+      {% endif %} 
     </div>
 
     <!--  ══════════════════════════════════════════
@@ -124,7 +124,7 @@
         </div>
       {% endif %}
 
-      {% comment %}main block{% endcomment %}
+      {% comment %} main block {% endcomment %}
       {% block content %}
 
       {% endblock %}

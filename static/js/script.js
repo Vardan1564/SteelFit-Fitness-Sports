@@ -84,7 +84,7 @@ function initProductFilter() {
 
         const checkedCats = [];
         categoryCheckboxes.forEach(cb => {
-            if (cb.checked) checkedCats.push(cb.value);
+            if (cb.checked) checkedCats.push(cb.value.toLowerCase());;
         });
 
         let visible = 0;
@@ -92,7 +92,7 @@ function initProductFilter() {
 
         cardArray.forEach(card => {
             const name = (card.dataset.name || '').toLowerCase();
-            const categories = (card.dataset.category || '').toLowerCase().split(',');
+            const categories = (card.dataset.category || '').toLowerCase().split(',').map(c => c.trim());;
             const price = parseInt(card.dataset.price || '0');
 
             const matchSearch = !query || name.includes(query) || categories.join(' ').includes(query);

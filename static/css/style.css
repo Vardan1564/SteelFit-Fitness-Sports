@@ -1838,15 +1838,17 @@ select {
 }
 
 .products-sort select {
+
     padding: 10px 16px;
     background: rgba(255, 255, 255, 0.04);
     border: 1.5px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-md);
-    color: var(--light);
+    color: #0D1F2D;
     font-size: 13px;
     outline: none;
     cursor: pointer;
 }
+
 
 .products-count {
     font-size: 13px;

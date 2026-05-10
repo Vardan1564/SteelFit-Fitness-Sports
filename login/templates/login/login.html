@@ -8,6 +8,20 @@
 </head>
 
 <body>
+
+  {% if messages %}
+        <div style="position:fixed;top:calc(var(--nav-h) + 16px);right:24px;z-index:999;display:flex;flex-direction:column;gap:10px;">
+          {% for message in messages %}
+            <div style="padding:14px 22px;border-radius:12px;background:rgba(13,31,45,0.95);backdrop-filter:blur(16px);border:1px solid {% if message.tags == 'success' %}
+                rgba(76,175,132,0.4)
+              {% elif message.tags == 'error' %}
+                rgba(224,82,82,0.4)
+              {% else %}
+                rgba(69,104,130,0.4)
+              {% endif %};color:#F4EDE8;font-size:14px;font-family:'Poppins',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,0.4);">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
 <div class="auth-page">
 
   <!-- LEFT PANEL (unchanged) -->
