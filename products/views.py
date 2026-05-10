@@ -1,8 +1,11 @@
 from django.shortcuts import render,get_object_or_404
 from . import models
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
+@login_required
 def products(request):
     products = models.Products.objects.prefetch_related('category','images')
     categories = models.Categories.objects.annotate(
