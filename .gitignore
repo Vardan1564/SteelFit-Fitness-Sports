@@ -1,5 +1,6 @@
 __pycache__/
 *.pyc
+<<<<<<< HEAD
 *.pyo
 *.pyd
 
@@ -11,3 +12,7 @@ media/
 
 .vscode/
 .DS_Store
+=======
+db.sqlite3
+*.sqlite3
+>>>>>>> fb3d026eca6cbd6c6817641520facf1b8604ef60

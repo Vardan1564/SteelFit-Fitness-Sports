@@ -36,7 +36,7 @@
 
               {% for cat in categories %}
               <label class="filter-checkbox">
-                <input type="checkbox" class="filter-category" value="{{ cat.slug }}" />
+                <input type="checkbox" class="filter-category" value="{{ cat.name|lower }}" />
                 <span class="filter-checkbox__box"></span>
                 {{ cat.name }} ({{ cat.count }})
               </label>
@@ -84,7 +84,7 @@
             </div>
 
             <!-- Availability -->
-            <div class="filter-group">
+            {% comment %} <div class="filter-group">
               <div class="filter-group__title">Availability</div>
               <label class="filter-checkbox">
                 <input type="checkbox" class="filter-category" value="instock" />
@@ -96,7 +96,7 @@
                 <span class="filter-checkbox__box"></span>
                 Pre-Order
               </label>
-            </div>
+            </div> {% endcomment %}
 
           </div>
         </aside>
@@ -139,7 +139,7 @@
             <article
               class="product-card"
               data-name="{{ product.name|lower }}"
-              data-category="{% for cat in product.category.all %}{{ cat.slug }}{% if not forloop.last %},{% endif %}{% endfor %}" 
+              data-category="{% for cat in product.category.all %}{{ cat.name|lower }}{% if not forloop.last %},{% endif %}{% endfor %}" 
               data-price="{{ product.discount_price }}"
             >
               <div class="product-card__image">
