@@ -31,6 +31,7 @@ class ProductsAdmin(admin.ModelAdmin):
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
     list_display = ['product', 'created_at']
+    # extra = 4
 
 
 # 🔹 Booking Admin

@@ -6,7 +6,7 @@ from django.db.models import Count
 def products(request):
     products = models.Products.objects.prefetch_related('category','images')
     categories = models.Categories.objects.annotate(
-        count=Count('products')   # 🔥 count products in each category
+        count=Count('products')   #Count products in each category
     )
     return render(request,'products/products.html',{'products':products,'categories':categories})
 
