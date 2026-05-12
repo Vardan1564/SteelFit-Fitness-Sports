@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.urls import views as auth_view
 from . import views
 
 
@@ -29,7 +30,6 @@ urlpatterns = [
     path('product/',include('products.urls'), ),
     path('auth/',include('login.urls'), ),
     path('contactUs/',include('contactUs.urls')),
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
