@@ -136,6 +136,45 @@
               <span>📩</span> Submit Booking Request
             </button>
           </form>
+
+          <button type="button" class="btn btn--outline btn--full feedback-toggle" id="feedbackToggle" aria-expanded="false" aria-controls="feedback-form">
+            <span>&#9733;</span> Post Feedback
+          </button>
+
+          <div class="feedback-form-wrap" id="feedback-form" hidden>
+            <div class="feedback-form__header">
+              <div>
+                <div class="feedback-form__eyebrow">Product Feedback</div>
+                <h3 class="feedback-form__title">Rate Your Experience</h3>
+              </div>
+            </div>
+
+            <form class="feedback-form" method="POST" action="{% url 'feedback' %}" >
+              {% csrf_token %}
+              <input type="hidden" name="product" value="{{ product.id }}" />
+              <div class="feedback-rating" aria-label="Rating">
+                <input type="radio" id="rating5" name="rating" value="5" checked />
+                <label for="rating5" title="5 stars">&#9733;</label>
+                <input type="radio" id="rating4" name="rating" value="4" />
+                <label for="rating4" title="4 stars">&#9733;</label>
+                <input type="radio" id="rating3" name="rating" value="3" />
+                <label for="rating3" title="3 stars">&#9733;</label>
+                <input type="radio" id="rating2" name="rating" value="2" />
+                <label for="rating2" title="2 stars">&#9733;</label>
+                <input type="radio" id="rating1" name="rating" value="1" />
+                <label for="rating1" title="1 star">&#9733;</label>
+              </div>
+
+              <div class="form-group form-group--textarea">
+                <textarea id="feedbackMessage" name="message" placeholder="message" rows="4" required></textarea>
+                <label for="feedbackMessage">Your Feedback</label>
+              </div>
+
+              <button type="submit" class="btn btn--primary btn--full">
+                <span>&#10003;</span> Submit Feedback
+              </button>
+            </form>
+          </div>
         </div>
 
       </div><!-- /info -->
@@ -158,10 +197,10 @@
             <div>
               <div class="review-card__name">{{ review.user.get_full_name|default:review.user.username }}</div>
               <div class="review-card__date">{{ review.created_at|date:"M d, Y" }}</div>
-              <div class="review-card__stars">{{ review.stars|default:"★★★★★" }}</div>
+              <div class="review-card__stars">{{ review.get_rating_display }}</div>
             </div>
           </div>
-          <p class="review-card__text">{{ review.text }}</p>
+          <p class="review-card__text">{{ review.message }}</p>
         </div>
         {% empty %}
         <div class="review-card">
@@ -273,5 +312,29 @@
       });
     });
   })();
+
+  (function () {
+    const toggle = document.getElementById('feedbackToggle');
+    const feedbackWrap = document.getElementById('feedback-form');
+    if (!toggle || !feedbackWrap) return;
+
+    toggle.addEventListener('click', () => {
+      const isOpening = feedbackWrap.hidden;
+      feedbackWrap.hidden = !isOpening;
+      toggle.setAttribute('aria-expanded', String(isOpening));
+      toggle.classList.toggle('feedback-toggle--active', isOpening);
+      toggle.innerHTML = isOpening
+        ? '<span>&#10005;</span> Hide Feedback Form'
+        : '<span>&#9733;</span> Post Feedback';
+
+      if (isOpening) {
+        requestAnimationFrame(() => {
+          feedbackWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      }
+    });
+
+  })();
 </script>
 {% endblock %}
+
