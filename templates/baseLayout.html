@@ -57,20 +57,20 @@
             <li>
               <a href="{% url 'contactus' %}" class="navbar__link">Contact</a>
             </li>
-             {% if user.is_authenticated %}
+             {% comment %} {% if user.is_authenticated %}
               
               <li>
                 <a href="{% url 'profile' %}" class="navbar__link">Profile</a>
               </li>
               
-            {% endif %} 
+            {% endif %}  {% endcomment %}
           </ul>
 
           <!-- Actions -->
           <div class="navbar__actions">
              {% if user.is_authenticated %}
               
-              <a href="/profile/" class="btn btn--ghost btn--sm">
+              <a href="{% url "profile" %}" class="btn btn--ghost btn--sm">
                 <span><i class="bi bi-person-fill"></i></span>
                  {{ user.first_name|default:user.username }} 
               </a>
@@ -101,8 +101,8 @@
         <a href="/logout/" class="navbar__mobile-link">Logout</a>
         
       {% else %}
-        <a href="/login/" class="navbar__mobile-link">Login</a>
-        <a href="/register/" class="navbar__mobile-link">Register</a>
+        <a href="{% url 'login' %}" class="navbar__mobile-link">Login</a>
+        <a href="{% url 'register' %}" class="navbar__mobile-link">Register</a>
       {% endif %} 
     </div>
 
@@ -183,10 +183,10 @@
               <h4 class="footer__col-title">Account</h4>
               <ul class="footer__links">
                 <li>
-                  <a href="#" class="footer__link">→ Login</a>
+                  <a href="{% url "login" %}" class="footer__link">→ Login</a>
                 </li>
                 <li>
-                  <a href="#" class="footer__link">→ Register</a>
+                  <a href="{% url "register" %}" class="footer__link">→ Register</a>
                 </li>
                 <li>
                   <a href="{% url 'profile' %}" class="footer__link">→ My Profile</a>

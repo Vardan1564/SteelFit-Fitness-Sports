@@ -1,0 +1,1 @@
+web: gunicorn steelfit.wsgi:application
